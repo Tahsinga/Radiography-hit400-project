@@ -1,0 +1,109 @@
+{% extends 'base.html' %}
+
+{% block title %}Appointment Detail - MIC Radiology{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header">
+        <h5 class="mb-0">Appointment Details</h5>
+    </div>
+    <div class="card-body">
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <h6>Scan Type</h6>
+                <p>{{ appointment.scan_type.name }}</p>
+            </div>
+            <div class="col-md-6">
+                <h6>Status</h6>
+                <p>
+                    <span class="badge bg-{% if appointment.status == 'completed' %}success{% elif appointment.status == 'confirmed' %}primary{% elif appointment.status == 'pending' %}warning{% elif appointment.status == 'cancelled' %}danger{% else %}secondary{% endif %}">
+                        {{ appointment.get_status_display }}
+                    </span>
+                </p>
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <h6>Date</h6>
+                <p>{{ appointment.appointment_date|date:"F j, Y" }}</p>
+            </div>
+            <div class="col-md-6">
+                <h6>Time</h6>
+                <p>{{ appointment.appointment_time|time:"H:i" }}</p>
+            </div>
+        </div>
+
+        {% if appointment.referring_doctor %}
+        <div class="row mb-3">
+            <div class="col-md-12">
+                <h6>Referring Doctor</h6>
+                <p>{{ appointment.referring_doctor.get_full_name }}</p>
+            </div>
+        </div>
+        {% endif %}
+
+        {% if appointment.clinical_notes %}
+        <div class="row mb-3">
+            <div class="col-md-12">
+                <h6>Clinical Notes</h6>
+                <p>{{ appointment.clinical_notes }}</p>
+            </div>
+        </div>
+        {% endif %}
+
+        {% if payment %}
+        <div class="card mt-3">
+            <div class="card-header">
+                <h6 class="mb-0">Payment Information</h6>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-4">
+                        <small class="text-muted">Service Charge</small>
+                        <p class="mb-0">R{{ payment.service_charge }}</p>
+                    </div>
+                    <div class="col-md-4">
+                        <small class="text-muted">Medical Aid Coverage</small>
+                        <p class="mb-0">R{{ payment.medical_aid_coverage_amount }}</p>
+                    </div>
+                    <div class="col-md-4">
+                        <small class="text-muted">Patient Co-payment</small>
+                        <p class="mb-0">R{{ payment.patient_co_payment }}</p>
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-md-12">
+                        <span class="badge bg-{% if payment.is_paid %}success{% else %}warning{% endif %}">
+                            {{ payment.get_status_display }}
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+        {% if report %}
+        <div class="card mt-3">
+            <div class="card-header">
+                <h6 class="mb-0">Report</h6>
+            </div>
+            <div class="card-body">
+                <p>Report Status: <span class="badge bg-info">{{ report.get_status_display }}</span></p>
+                <a href="{% url 'view_report' report.id %}" class="btn btn-sm btn-primary">View Report</a>
+                {% if report.pdf_file %}
+                <a href="{% url 'download_report' report.id %}" class="btn btn-sm btn-success">Download PDF</a>
+                {% endif %}
+            </div>
+        </div>
+        {% endif %}
+
+        <div class="mt-4">
+            <a href="{% url 'appointment_list' %}" class="btn btn-secondary">Back to Appointments</a>
+            {% if appointment.can_be_cancelled %}
+            <a href="{% url 'cancel_appointment' appointment.id %}" class="btn btn-danger" onclick="return confirm('Are you sure you want to cancel this appointment?')">Cancel Appointment</a>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

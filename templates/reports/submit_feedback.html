@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %}Submit Feedback - MIC Radiology{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header">
+        <h5 class="mb-0">Submit Feedback</h5>
+    </div>
+    <div class="card-body">
+        <div class="alert alert-info">
+            <strong>Appointment:</strong> {{ appointment.scan_type.name }} - {{ appointment.appointment_date|date:"F j, Y" }}
+        </div>
+
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-primary">Submit Feedback</button>
+            <a href="{% url 'appointment_detail' appointment.id %}" class="btn btn-secondary">Cancel</a>
+        </form>
+    </div>
+</div>
+{% endblock %}

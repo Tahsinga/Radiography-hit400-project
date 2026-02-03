@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block title %}View Report - MIC Radiology{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header">
+        <h5 class="mb-0">Report</h5>
+    </div>
+    <div class="card-body">
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <h6>Patient</h6>
+                <p>{{ report.appointment.patient.get_full_name }}</p>
+            </div>
+            <div class="col-md-6">
+                <h6>Scan Type</h6>
+                <p>{{ report.appointment.scan_type.name }}</p>
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <h6>Radiologist</h6>
+                <p>{{ report.radiologist.get_full_name }}</p>
+            </div>
+            <div class="col-md-6">
+                <h6>Status</h6>
+                <p><span class="badge bg-info">{{ report.get_status_display }}</span></p>
+            </div>
+        </div>
+
+        {% if report.findings %}
+        <div class="row mb-3">
+            <div class="col-md-12">
+                <h6>Findings</h6>
+                <p>{{ report.findings }}</p>
+            </div>
+        </div>
+        {% endif %}
+
+        {% if report.pdf_file %}
+        <div class="row mb-3">
+            <div class="col-md-12">
+                <a href="{% url 'download_report' report.id %}" class="btn btn-success">
+                    <i class="bi bi-download"></i> Download PDF
+                </a>
+            </div>
+        </div>
+        {% endif %}
+
+        <div class="mt-4">
+            <a href="{% url 'appointment_detail' report.appointment.id %}" class="btn btn-secondary">Back to Appointment</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

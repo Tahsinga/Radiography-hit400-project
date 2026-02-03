@@ -1,0 +1,146 @@
+{% extends 'base.html' %}
+
+{% block title %}Analytics Dashboard - MIC Radiology{% endblock %}
+
+{% block content %}
+<div class="container-fluid mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>Analytics Dashboard</h2>
+        <div class="btn-group" role="group">
+            <a href="?days=7" class="btn btn-sm btn-outline-primary">7 Days</a>
+            <a href="?days=30" class="btn btn-sm btn-outline-primary active">30 Days</a>
+            <a href="?days=90" class="btn btn-sm btn-outline-primary">90 Days</a>
+        </div>
+    </div>
+
+    <!-- KPI Cards -->
+    <div class="row mb-4">
+        <div class="col-md-3 mb-3">
+            <div class="card stat-card">
+                <div class="card-body">
+                    <h6 class="card-title">Total Appointments</h6>
+                    <h2 class="mb-2">{{ total_appointments }}</h2>
+                    <small class="text-white-50">Last {{ time_range_days }} days</small>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-3">
+            <div class="card stat-card">
+                <div class="card-body">
+                    <h6 class="card-title">Completed</h6>
+                    <h2 class="mb-2">{{ completed_appointments }}</h2>
+                    <small class="text-white-50">{{ completion_rate }}% completion rate</small>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-3">
+            <div class="card stat-card">
+                <div class="card-body">
+                    <h6 class="card-title">Missed Appointments</h6>
+                    <h2 class="mb-2">{{ missed_appointments }}</h2>
+                    <small class="text-white-50">{{ missed_rate }}% no-show rate</small>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-3">
+            <div class="card stat-card">
+                <div class="card-body">
+                    <h6 class="card-title">Avg Satisfaction</h6>
+                    <h2 class="mb-2">{{ avg_satisfaction }}/5.0</h2>
+                    <small class="text-white-50">Based on feedback</small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Charts and Reports -->
+    <div class="row">
+        <div class="col-md-6 mb-4">
+            <div class="card">
+                <div class="card-header">
+                    <h6 class="mb-0">Appointments by Scan Type</h6>
+                </div>
+                <div class="card-body">
+                    <canvas id="scanTypeChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 mb-4">
+            <div class="card">
+                <div class="card-header">
+                    <h6 class="mb-0">Revenue Summary</h6>
+                </div>
+                <div class="card-body">
+                    <p><strong>Total Revenue:</strong> R{{ total_revenue }}</p>
+                    <p><strong>Pending:</strong> R{{ pending_revenue }}</p>
+                    <div class="progress">
+                        <div class="progress-bar" role="progressbar" style="width: 75%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6 mb-4">
+            <div class="card">
+                <div class="card-header">
+                    <h6 class="mb-0">Patient Satisfaction</h6>
+                </div>
+                <div class="card-body">
+                    <p><strong>Would Recommend:</strong> {{ would_recommend_rate }}%</p>
+                    <p><strong>Overall Satisfaction:</strong> {{ avg_satisfaction }}/5</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 mb-4">
+            <div class="card">
+                <div class="card-header">
+                    <h6 class="mb-0">Payment Shortfalls</h6>
+                </div>
+                <div class="card-body">
+                    <p><strong>Total Shortfalls:</strong> R{{ shortfalls.total_shortfall|default:"0" }}</p>
+                    <p><strong>Cases:</strong> {{ shortfalls.count|default:"0" }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <a href="{% url 'revenue_report' %}" class="btn btn-primary btn-sm">View Revenue Report</a>
+            <a href="{% url 'feedback_analysis' %}" class="btn btn-primary btn-sm">View Feedback Analysis</a>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+<!-- HTML comments to prevent JS linting errors in Django templates -->
+<script>
+// Scan Type Chart
+const scanData = {{ scan_breakdown|safe }}; // NOSONAR
+const ctx = document.getElementById('scanTypeChart').getContext('2d');
+new Chart(ctx, {
+    type: 'doughnut',
+    data: {
+        labels: scanData.map(d => d.scan_type__name),
+        datasets: [{
+            data: scanData.map(d => d.count),
+            backgroundColor: [
+                '#667eea',
+                '#764ba2',
+                '#f093fb',
+                '#4facfe',
+                '#00f2fe'
+            ]
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: true
+    }
+});
+</script>
+{% endblock %}

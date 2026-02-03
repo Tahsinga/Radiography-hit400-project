@@ -1,0 +1,16 @@
+{
+    "python.analysis.typeCheckingMode": "basic",
+    "python.linting.enabled": true,
+    "[html]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[django-html]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "files.associations": {
+        "*.html": "django-html"
+    },
+    "pylance.analysis.typeCheckingMode": "basic",
+    "javascript.validate.enable": false,
+    "html.validate.scripts": false
+}

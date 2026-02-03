@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+
+{% block title %}Patient Dashboard - MIC Radiology{% endblock %}
+
+{% block content %}
+<div class="container-fluid mt-4">
+    <h2 class="mb-4">Patient Dashboard</h2>
+
+    <div class="row">
+        <div class="col-md-3 mb-4">
+            <div class="card stat-card">
+                <div class="card-body">
+                    <h6 class="card-title">Total Appointments</h6>
+                    <h2 class="card-text">{{ total_appointments }}</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-4">
+            <div class="card stat-card">
+                <div class="card-body">
+                    <h6 class="card-title">Upcoming</h6>
+                    <h2 class="card-text">{{ upcoming_appointments|length }}</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-4">
+            <div class="card stat-card">
+                <div class="card-body">
+                    <h6 class="card-title">Completed</h6>
+                    <h2 class="card-text">{{ completed_appointments.count }}</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">Upcoming Appointments</h5>
+                </div>
+                <div class="card-body">
+                    {% if upcoming_appointments %}
+                        <div class="list-group">
+                            {% for appointment in upcoming_appointments %}
+                                <a href="{% url 'appointment_detail' appointment.id %}" class="list-group-item list-group-item-action">
+                                    <div class="d-flex w-100 justify-content-between">
+                                        <h6 class="mb-1">{{ appointment.scan_type.name }}</h6>
+                                        <small>{{ appointment.appointment_date }} at {{ appointment.appointment_time }}</small>
+                                    </div>
+                                    <p class="mb-1 text-muted">Status: <span class="badge bg-info">{{ appointment.get_status_display }}</span></p>
+                                </a>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <p class="text-muted">No upcoming appointments</p>
+                    {% endif %}
+                </div>
+                <div class="card-footer">
+                    <a href="{% url 'book_appointment' %}" class="btn btn-primary btn-sm">
+                        <i class="bi bi-plus"></i> Book New Appointment
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">Quick Actions</h5>
+                </div>
+                <div class="card-body">
+                    <a href="{% url 'book_appointment' %}" class="btn btn-primary btn-sm w-100 mb-2">
+                        <i class="bi bi-calendar-check"></i> Book Appointment
+                    </a>
+                    <a href="{% url 'appointment_list' %}" class="btn btn-outline-primary btn-sm w-100 mb-2">
+                        <i class="bi bi-list-ul"></i> View All Appointments
+                    </a>
+                    <a href="{% url 'profile' %}" class="btn btn-outline-primary btn-sm w-100">
+                        <i class="bi bi-person"></i> Update Profile
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
