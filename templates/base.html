@@ -4,76 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}MIC Radiology Management System{% endblock %}</title>
+    {% load static %}
+    
+    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <!-- Custom Theme CSS -->
+    <link rel="stylesheet" href="{% static 'css/theme.css' %}">
+    
     <style>
+        /* Quick overrides if needed */
         body {
-            background-color: #f8f9fa;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        .navbar-brand {
-            font-weight: bold;
-            color: #0d6efd !important;
-        }
-        .navbar {
-            background-color: #ffffff;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-        .sidebar {
-            background-color: #ffffff;
-            border-right: 1px solid #dee2e6;
-            min-height: 100vh;
-        }
-        .sidebar .nav-link {
-            color: #495057;
-            border-left: 3px solid transparent;
-            padding-left: 1.25rem;
-        }
-        .sidebar .nav-link:hover,
-        .sidebar .nav-link.active {
-            background-color: #f8f9fa;
-            color: #0d6efd;
-            border-left-color: #0d6efd;
-        }
-        .card {
-            border: none;
-            border-radius: 0.5rem;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-            margin-bottom: 1.5rem;
-        }
-        .btn-primary {
-            background-color: #0d6efd;
-            border-color: #0d6efd;
-        }
-        .btn-primary:hover {
-            background-color: #0b5ed7;
-            border-color: #0b5ed7;
-        }
-        .dashboard-card {
-            border-radius: 0.5rem;
-            padding: 2rem;
-            margin-bottom: 2rem;
-        }
-        .stat-card {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-        }
-        .footer {
-            background-color: #ffffff;
-            border-top: 1px solid #dee2e6;
-            padding: 2rem 0;
-            margin-top: 2rem;
-            text-align: center;
-            color: #6c757d;
-        }
-        .alert {
-            border-radius: 0.5rem;
-            border: none;
-        }
-        @media (max-width: 768px) {
-            .sidebar {
-                min-height: auto;
-            }
+            font-family: 'Segoe UI', 'Roboto', 'Helvetica Neue', sans-serif;
         }
     </style>
     {% block extra_css %}{% endblock %}

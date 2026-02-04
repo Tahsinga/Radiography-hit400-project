@@ -1,53 +1,79 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}Patient Dashboard - MIC Radiology{% endblock %}
 
 {% block content %}
-<div class="container-fluid mt-4">
-    <h2 class="mb-4">Patient Dashboard</h2>
-
+<div class="container-fluid">
     <div class="row">
-        <div class="col-md-3 mb-4">
-            <div class="card stat-card">
-                <div class="card-body">
-                    <h6 class="card-title">Total Appointments</h6>
-                    <h2 class="card-text">{{ total_appointments }}</h2>
-                </div>
+        <!-- Sidebar -->
+        <nav class="col-md-2 sidebar">
+            <div class="sidebar-sticky p-3">
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{% url 'patient_dashboard' %}">
+                            <i class="bi bi-house"></i> Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'book_appointment' %}">
+                            <i class="bi bi-calendar-plus"></i> Book Appointment
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'appointment_list' %}">
+                            <i class="bi bi-calendar-check"></i> My Appointments
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'upload_report' %}">
+                            <i class="bi bi-file-earmark-upload"></i> Upload Reports
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'view_report' %}">
+                            <i class="bi bi-file-earmark-pdf"></i> My Reports
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'notification_list' %}">
+                            <i class="bi bi-bell"></i> Notifications
+                        </a>
+                    </li>
+                </ul>
             </div>
-        </div>
-        <div class="col-md-3 mb-4">
-            <div class="card stat-card">
-                <div class="card-body">
-                    <h6 class="card-title">Upcoming</h6>
-                    <h2 class="card-text">{{ upcoming_appointments|length }}</h2>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-3 mb-4">
-            <div class="card stat-card">
-                <div class="card-body">
-                    <h6 class="card-title">Completed</h6>
-                    <h2 class="card-text">{{ completed_appointments.count }}</h2>
-                </div>
-            </div>
-        </div>
-    </div>
+        </nav>
 
-    <div class="row mt-4">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">
-                    <h5 class="mb-0">Upcoming Appointments</h5>
+        <!-- Main Content -->
+        <main class="col-md-10 dashboard-container">
+            <!-- Header -->
+            <div class="dashboard-header">
+                <h1>Welcome back, <span style="color: #16a085;">{{ user.first_name }}</span> 👋</h1>
+                <p class="text-muted">Here's your radiology dashboard overview</p>
+            </div>
+
+            <!-- Stats Grid -->
+            <div class="stats-grid">
+                <div class="stat-card teal">
+                    <h6><i class="bi bi-calendar-check"></i> APPOINTMENTS</h6>
+                    <div class="value">{{ total_appointments|default:0 }}</div>
                 </div>
-                <div class="card-body">
-                    {% if upcoming_appointments %}
-                        <div class="list-group">
-                            {% for appointment in upcoming_appointments %}
-                                <a href="{% url 'appointment_detail' appointment.id %}" class="list-group-item list-group-item-action">
-                                    <div class="d-flex w-100 justify-content-between">
-                                        <h6 class="mb-1">{{ appointment.scan_type.name }}</h6>
-                                        <small>{{ appointment.appointment_date }} at {{ appointment.appointment_time }}</small>
-                                    </div>
+
+                <div class="stat-card orange">
+                    <h6><i class="bi bi-hourglass-split"></i> UPCOMING</h6>
+                    <div class="value">{{ upcoming_appointments|length|default:0 }}</div>
+                </div>
+
+                <div class="stat-card pink">
+                    <h6><i class="bi bi-check-circle"></i> COMPLETED</h6>
+                    <div class="value">{{ completed_appointments.count|default:0 }}</div>
+                </div>
+
+                <div class="stat-card blue">
+                    <h6><i class="bi bi-file-earmark-pdf"></i> REPORTS</h6>
+                    <div class="value">{{ reports|length|default:0 }}</div>
+                </div>
+            </div>
                                     <p class="mb-1 text-muted">Status: <span class="badge bg-info">{{ appointment.get_status_display }}</span></p>
                                 </a>
                             {% endfor %}
