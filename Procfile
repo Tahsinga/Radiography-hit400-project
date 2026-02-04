@@ -1,1 +1,1 @@
-web: gunicorn mic_radiology.wsgi:application
+gunicorn mic_radiology.wsgi:application
