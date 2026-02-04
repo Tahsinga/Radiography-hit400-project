@@ -365,6 +365,10 @@
                 height: 60px;
                 font-size: 36px;
             }
+
+            .forgot-password {
+                text-align: center;
+            }
         }
     </style>
 </head>
@@ -401,8 +405,8 @@
                     {% csrf_token %}
                     
                     <div class="form-group">
-                        <label for="username" class="form-label">Email</label>
-                        <input type="text" class="form-control" id="username" name="username" placeholder="Enter your email" required>
+                        <label for="username" class="form-label">Username</label>
+                        <input type="text" class="form-control" id="username" name="username" placeholder="Enter your username" required>
                     </div>
 
                     <div class="form-group">
