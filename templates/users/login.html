@@ -1,42 +1,435 @@
-{% extends 'base.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - MIC Radiology</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-{% block title %}Login - MIC Radiology{% endblock %}
+        html, body {
+            height: 100%;
+            width: 100%;
+            overflow: hidden;
+        }
 
-{% block content %}
-<div class="container mt-5">
-    <div class="row justify-content-center">
-        <div class="col-md-6 col-lg-5">
-            <div class="card">
-                <div class="card-body p-5">
-                    <h2 class="card-title text-center mb-4">
-                        <i class="bi bi-hospital"></i> MIC Radiology
-                    </h2>
-                    <h5 class="text-center mb-4">Login to Your Account</h5>
+        .modern-login-wrapper {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.5) 100%), 
+                        url('https://images.unsplash.com/photo-1505142468610-359e7d316be0?w=1920&q=80') no-repeat center;
+            background-size: cover;
+            background-attachment: fixed;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            padding: 20px;
+        }
 
-                    <form method="post">
-                        {% csrf_token %}
-                        
-                        <div class="mb-3">
-                            <label for="username" class="form-label">Username</label>
-                            <input type="text" class="form-control" id="username" name="username" required>
+        .login-content {
+            display: flex;
+            width: 100%;
+            max-width: 1000px;
+            height: 600px;
+            border-radius: 20px;
+            overflow: hidden;
+            background: white;
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .login-left {
+            flex: 1;
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.6) 100%),
+                        url('https://images.unsplash.com/photo-1505142468610-359e7d316be0?w=1920&q=80') no-repeat center;
+            background-size: cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            padding: 40px;
+            border-radius: 20px 0 0 20px;
+        }
+
+        .left-content {
+            text-align: center;
+            max-width: 90%;
+        }
+
+        .brand-logo {
+            font-size: 48px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.2);
+            width: 70px;
+            height: 70px;
+            border-radius: 15px;
+            margin-left: auto;
+            margin-right: auto;
+            margin-bottom: 30px;
+        }
+
+        .main-title {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 30px;
+            font-weight: 800;
+        }
+
+        .subtitle-small {
+            font-size: 16px;
+            letter-spacing: 3px;
+            opacity: 0.9;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .title-main {
+            font-size: 56px;
+            line-height: 1.2;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .tagline {
+            font-size: 20px;
+            font-weight: 300;
+            margin-bottom: 15px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+        }
+
+        .description {
+            font-size: 14px;
+            opacity: 0.9;
+            line-height: 1.6;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+        }
+
+        .login-right {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+            border-radius: 0 20px 20px 0;
+        }
+
+        .login-card {
+            width: 100%;
+            max-width: 420px;
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(30, 136, 229, 0.2), 0 0 40px rgba(30, 136, 229, 0.1);
+            border: 1px solid rgba(30, 136, 229, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            background: #f8f9fa;
+            font-family: inherit;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: #1e88e5;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(30, 136, 229, 0.1);
+        }
+
+        .form-control::placeholder {
+            color: #999;
+        }
+
+        .forgot-password {
+            text-align: right;
+            margin-bottom: 20px;
+        }
+
+        .forgot-password a {
+            color: #1e88e5;
+            font-size: 13px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .forgot-password a:hover {
+            color: #1565c0;
+            text-decoration: underline;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-family: inherit;
+        }
+
+        .btn-signin {
+            background: linear-gradient(135deg, #1e88e5 0%, #1565c0 100%);
+            color: white;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 15px rgba(30, 136, 229, 0.3);
+        }
+
+        .btn-signin:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(30, 136, 229, 0.4);
+            background: linear-gradient(135deg, #1565c0 0%, #0d47a1 100%);
+            color: white;
+        }
+
+        .divider {
+            text-align: center;
+            margin: 20px 0;
+            color: #999;
+            font-size: 13px;
+            font-weight: 500;
+            position: relative;
+        }
+
+        .divider::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: #e0e0e0;
+        }
+
+        .divider span {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 0 10px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .btn-google {
+            background: white;
+            border: 1px solid #e0e0e0;
+            color: #333;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .btn-google:hover {
+            background: #f8f9fa;
+            border-color: #1e88e5;
+            color: #1e88e5;
+        }
+
+        .google-icon {
+            width: 18px;
+            height: 18px;
+        }
+
+        .signup-link {
+            text-align: center;
+            font-size: 13px;
+            color: #666;
+        }
+
+        .signup-link a {
+            color: #1e88e5;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+
+        .signup-link a:hover {
+            color: #1565c0;
+            text-decoration: underline;
+        }
+
+        .alert {
+            margin-bottom: 20px;
+            border-radius: 8px;
+            font-size: 13px;
+            padding: 12px 16px;
+            border: 1px solid;
+        }
+
+        .alert-success {
+            background-color: #d4edda;
+            border-color: #c3e6cb;
+            color: #155724;
+        }
+
+        .alert-error {
+            background-color: #f8d7da;
+            border-color: #f5c6cb;
+            color: #721c24;
+        }
+
+        @media (max-width: 900px) {
+            .login-content {
+                flex-direction: column;
+                height: auto;
+                max-width: 600px;
+            }
+
+            .login-left {
+                padding: 40px 20px;
+                min-height: 250px;
+                border-radius: 20px 20px 0 0;
+            }
+
+            .login-right {
+                border-radius: 0 0 20px 20px;
+            }
+
+            .title-main {
+                font-size: 40px;
+            }
+
+            .tagline {
+                font-size: 16px;
+            }
+
+            .description {
+                font-size: 13px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .login-left {
+                padding: 20px 15px;
+                min-height: 150px;
+            }
+
+            .login-right {
+                padding: 20px 15px;
+            }
+
+            .title-main {
+                font-size: 32px;
+            }
+
+            .subtitle-small {
+                font-size: 13px;
+            }
+
+            .tagline {
+                font-size: 14px;
+            }
+
+            .btn {
+                padding: 10px;
+                font-size: 13px;
+            }
+
+            .brand-logo {
+                width: 60px;
+                height: 60px;
+                font-size: 36px;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="modern-login-wrapper">
+    <div class="login-content">
+        <!-- Left Section -->
+        <div class="login-left">
+            <div class="left-content">
+                <div class="brand-logo">
+                    <i class="bi bi-hospital"></i>
+                </div>
+                <h1 class="main-title">
+                    <span class="subtitle-small">RADIOGRAPHY</span>
+                    <span class="title-main">MIC RADIOLOGY</span>
+                </h1>
+                <p class="tagline">Where Your Health Data Become Reality.</p>
+                <p class="description">Embark on a journey where every corner of the world is within your reach.</p>
+            </div>
+        </div>
+
+        <!-- Right Section -->
+        <div class="login-right">
+            <div class="login-card">
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert alert-{{ message.tags }}">
+                            {{ message }}
                         </div>
+                    {% endfor %}
+                {% endif %}
 
-                        <div class="mb-3">
-                            <label for="password" class="form-label">Password</label>
-                            <input type="password" class="form-control" id="password" name="password" required>
-                        </div>
+                <form method="post" class="login-form">
+                    {% csrf_token %}
+                    
+                    <div class="form-group">
+                        <label for="username" class="form-label">Email</label>
+                        <input type="text" class="form-control" id="username" name="username" placeholder="Enter your email" required>
+                    </div>
 
-                        <button type="submit" class="btn btn-primary w-100">Login</button>
-                    </form>
+                    <div class="form-group">
+                        <label for="password" class="form-label">Password</label>
+                        <input type="password" class="form-control" id="password" name="password" placeholder="••••••••" required>
+                    </div>
 
-                    <hr>
+                    <div class="forgot-password">
+                        <a href="#">Forgot password?</a>
+                    </div>
 
-                    <p class="text-center mt-3">
-                        Don't have an account? <a href="{% url 'register' %}">Register here</a>
-                    </p>
+                    <button type="submit" class="btn btn-signin">SIGN IN</button>
+                </form>
+
+                <div class="divider">
+                    <span>or</span>
+                </div>
+
+                <button type="button" class="btn btn-google">
+                    <img src="https://www.gstatic.com/images/branding/product/1x/googleg_192.png" alt="Google" class="google-icon">
+                    Sign in with Google
+                </button>
+
+                <div class="signup-link">
+                    Are you new? <a href="{% url 'register' %}">Create an account</a>
                 </div>
             </div>
         </div>
     </div>
 </div>
-{% endblock %}
+</body>
+</html>

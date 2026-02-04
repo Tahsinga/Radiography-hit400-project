@@ -9,8 +9,16 @@ from apps.users.models import CustomUser
 def home(request):
     """Home page - redirects to login or dashboard"""
     if request.user.is_authenticated:
-        return redirect('dashboard')
-    return redirect('login')
+        response = redirect('dashboard')
+    else:
+        response = redirect('login')
+    
+    # Prevent caching of authentication state
+    response['Cache-Control'] = 'no-cache, no-store, must-revalidate, max-age=0'
+    response['Pragma'] = 'no-cache'
+    response['Expires'] = '0'
+    
+    return response
 
 @require_http_methods(["GET", "POST"])
 def register(request):

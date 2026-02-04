@@ -26,16 +26,6 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'upload_report' %}">
-                            <i class="bi bi-file-earmark-upload"></i> Upload Reports
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'view_report' %}">
-                            <i class="bi bi-file-earmark-pdf"></i> My Reports
-                        </a>
-                    </li>
-                    <li class="nav-item">
                         <a class="nav-link" href="{% url 'notification_list' %}">
                             <i class="bi bi-bell"></i> Notifications
                         </a>
@@ -74,40 +64,53 @@
                     <div class="value">{{ reports|length|default:0 }}</div>
                 </div>
             </div>
-                                    <p class="mb-1 text-muted">Status: <span class="badge bg-info">{{ appointment.get_status_display }}</span></p>
-                                </a>
+
+            <!-- Upcoming Appointments -->
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5 class="card-title"><i class="bi bi-calendar-event"></i> Upcoming Appointments</h5>
+                    <a href="{% url 'appointment_list' %}" class="btn btn-sm btn-primary">View All</a>
+                </div>
+                <div class="card-body">
+                    {% if upcoming_appointments %}
+                        <div class="list-group">
+                            {% for appointment in upcoming_appointments %}
+                                <div class="list-group-item">
+                                    <div class="d-flex w-100 justify-content-between">
+                                        <h6 class="mb-1">{{ appointment.scan_type }}</h6>
+                                        <small>{{ appointment.appointment_date|date:"M d, Y" }}</small>
+                                    </div>
+                                    <p class="mb-1 text-muted">{{ appointment.appointment_date|date:"g:i A" }}</p>
+                                </div>
                             {% endfor %}
                         </div>
                     {% else %}
-                        <p class="text-muted">No upcoming appointments</p>
+                        <p class="text-muted">No upcoming appointments scheduled</p>
                     {% endif %}
                 </div>
-                <div class="card-footer">
-                    <a href="{% url 'book_appointment' %}" class="btn btn-primary btn-sm">
-                        <i class="bi bi-plus"></i> Book New Appointment
-                    </a>
-                </div>
             </div>
-        </div>
 
-        <div class="col-md-4">
+            <!-- Quick Actions -->
             <div class="card">
                 <div class="card-header">
-                    <h5 class="mb-0">Quick Actions</h5>
+                    <h5 class="card-title"><i class="bi bi-lightning"></i> Quick Actions</h5>
                 </div>
                 <div class="card-body">
-                    <a href="{% url 'book_appointment' %}" class="btn btn-primary btn-sm w-100 mb-2">
-                        <i class="bi bi-calendar-check"></i> Book Appointment
-                    </a>
-                    <a href="{% url 'appointment_list' %}" class="btn btn-outline-primary btn-sm w-100 mb-2">
-                        <i class="bi bi-list-ul"></i> View All Appointments
-                    </a>
-                    <a href="{% url 'profile' %}" class="btn btn-outline-primary btn-sm w-100">
-                        <i class="bi bi-person"></i> Update Profile
-                    </a>
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <a href="{% url 'book_appointment' %}" class="btn btn-primary w-100">
+                                <i class="bi bi-calendar-plus"></i> Book Appointment
+                            </a>
+                        </div>
+                        <div class="col-md-6">
+                            <a href="{% url 'appointment_list' %}" class="btn btn-secondary w-100">
+                                <i class="bi bi-list-ul"></i> View Appointments
+                            </a>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
+        </main>
     </div>
 </div>
 {% endblock %}
