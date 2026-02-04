@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Radiography HIT400 - Medical Imaging Center</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            width: 100%;
+        }
+        
+        header {
+            text-align: center;
+            color: white;
+            margin-bottom: 50px;
+        }
+        
+        h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .subtitle {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+        
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+        }
+        
+        .card-icon {
+            font-size: 3em;
+            margin-bottom: 15px;
+        }
+        
+        .card h3 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 1.5em;
+        }
+        
+        .card p {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+        
+        .btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 0.9em;
+            transition: opacity 0.3s ease;
+        }
+        
+        .btn:hover {
+            opacity: 0.9;
+        }
+        
+        .api-status {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        
+        .api-status h3 {
+            color: #333;
+            margin-bottom: 15px;
+        }
+        
+        .endpoint {
+            background: #f5f5f5;
+            padding: 10px 15px;
+            margin: 8px 0;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            color: #333;
+            border-left: 4px solid #667eea;
+        }
+        
+        .method {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 3px;
+            font-weight: bold;
+            margin-right: 10px;
+            color: white;
+            font-size: 0.8em;
+        }
+        
+        .method-get {
+            background: #61affe;
+        }
+        
+        .method-post {
+            background: #49cc90;
+        }
+        
+        .method-put {
+            background: #fca130;
+        }
+        
+        .method-delete {
+            background: #f93e3e;
+        }
+        
+        footer {
+            text-align: center;
+            color: white;
+            margin-top: 40px;
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🏥 Radiography HIT400</h1>
+            <p class="subtitle">Medical Imaging Center Management System</p>
+        </header>
+        
+        <div class="cards-grid">
+            <div class="card">
+                <div class="card-icon">👥</div>
+                <h3>User Management</h3>
+                <p>Manage users, roles, and permissions for healthcare professionals and patients.</p>
+                <a href="#" class="btn">Learn More</a>
+            </div>
+            
+            <div class="card">
+                <div class="card-icon">📅</div>
+                <h3>Appointments</h3>
+                <p>Schedule and manage patient appointments for radiography services.</p>
+                <a href="#" class="btn">Learn More</a>
+            </div>
+            
+            <div class="card">
+                <div class="card-icon">📊</div>
+                <h3>Reports</h3>
+                <p>Generate and view detailed radiography reports and patient imaging data.</p>
+                <a href="#" class="btn">Learn More</a>
+            </div>
+            
+            <div class="card">
+                <div class="card-icon">📈</div>
+                <h3>Analytics</h3>
+                <p>Track system metrics, usage statistics, and performance indicators.</p>
+                <a href="#" class="btn">Learn More</a>
+            </div>
+            
+            <div class="card">
+                <div class="card-icon">🔔</div>
+                <h3>Notifications</h3>
+                <p>Send notifications and alerts to users via SMS, email, and in-app messages.</p>
+                <a href="#" class="btn">Learn More</a>
+            </div>
+            
+            <div class="card">
+                <div class="card-icon">💳</div>
+                <h3>Payments</h3>
+                <p>Process payments and manage billing for radiography services.</p>
+                <a href="#" class="btn">Learn More</a>
+            </div>
+        </div>
+        
+        <div class="api-status">
+            <h3>🚀 API Endpoints</h3>
+            
+            <div class="endpoint">
+                <span class="method method-get">GET</span>
+                <code>/api/users</code> - Get all users
+            </div>
+            <div class="endpoint">
+                <span class="method method-post">POST</span>
+                <code>/api/users</code> - Create new user
+            </div>
+            
+            <div class="endpoint">
+                <span class="method method-get">GET</span>
+                <code>/api/appointments</code> - Get all appointments
+            </div>
+            <div class="endpoint">
+                <span class="method method-post">POST</span>
+                <code>/api/appointments</code> - Create appointment
+            </div>
+            
+            <div class="endpoint">
+                <span class="method method-get">GET</span>
+                <code>/api/reports</code> - Get all reports
+            </div>
+            <div class="endpoint">
+                <span class="method method-post">POST</span>
+                <code>/api/reports</code> - Create report
+            </div>
+            
+            <div class="endpoint">
+                <span class="method method-get">GET</span>
+                <code>/api/analytics</code> - Get analytics data
+            </div>
+            
+            <div class="endpoint">
+                <span class="method method-get">GET</span>
+                <code>/api/notifications</code> - Get notifications
+            </div>
+            <div class="endpoint">
+                <span class="method method-post">POST</span>
+                <code>/api/notifications</code> - Send notification
+            </div>
+            
+            <div class="endpoint">
+                <span class="method method-get">GET</span>
+                <code>/api/payments</code> - Get payments
+            </div>
+            <div class="endpoint">
+                <span class="method method-post">POST</span>
+                <code>/api/payments</code> - Process payment
+            </div>
+        </div>
+        
+        <footer>
+            <p>🔧 Status: <strong>Running on Port 5000</strong></p>
+            <p>&copy; 2026 Medical Imaging Center - Radiography Management System</p>
+        </footer>
+    </div>
+</body>
+</html>
