@@ -15,7 +15,7 @@
         html, body {
             height: 100%;
             width: 100%;
-            overflow: hidden;
+            overflow-x: hidden;
         }
 
         .modern-login-wrapper {
@@ -35,9 +35,9 @@
             display: flex;
             width: 100%;
             max-width: 1000px;
-            height: 600px;
+            min-height: 600px;
             border-radius: 20px;
-            overflow: hidden;
+            overflow: auto;
             background: white;
             box-shadow: 0 30px 80px rgba(0, 0, 0, 0.4);
             border: 1px solid rgba(255, 255, 255, 0.2);
@@ -122,6 +122,8 @@
             justify-content: center;
             padding: 40px;
             border-radius: 0 20px 20px 0;
+            overflow-y: auto;
+            max-height: none;
         }
 
         .login-card {
@@ -418,11 +420,6 @@
                 <div class="divider">
                     <span>or</span>
                 </div>
-
-                <button type="button" class="btn btn-google">
-                    <img src="https://www.gstatic.com/images/branding/product/1x/googleg_192.png" alt="Google" class="google-icon">
-                    Sign in with Google
-                </button>
 
                 <div class="signup-link">
                     Are you new? <a href="{% url 'register' %}">Create an account</a>
