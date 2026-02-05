@@ -3,15 +3,18 @@
 {% block title %}Analytics Dashboard - MIC Radiology{% endblock %}
 
 {% block content %}
-<div class="container-fluid mt-4">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h2>Analytics Dashboard</h2>
-        <div class="btn-group" role="group">
-            <a href="?days=7" class="btn btn-sm btn-outline-primary">7 Days</a>
-            <a href="?days=30" class="btn btn-sm btn-outline-primary active">30 Days</a>
-            <a href="?days=90" class="btn btn-sm btn-outline-primary">90 Days</a>
-        </div>
-    </div>
+<div class="container-fluid mt-4 dashboard-theme">
+    <div class="row" style="gap: 20px;">
+        <!-- Left Column: Dashboard Controls -->
+        <div class="col-md-6" style="max-height: 90vh; overflow-y: auto;">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2>Analytics Dashboard</h2>
+                <div class="btn-group" role="group">
+                    <a href="?days=7" class="btn btn-sm btn-outline-primary">7 Days</a>
+                    <a href="?days=30" class="btn btn-sm btn-outline-primary active">30 Days</a>
+                    <a href="?days=90" class="btn btn-sm btn-outline-primary">90 Days</a>
+                </div>
+            </div>
 
     <!-- KPI Cards -->
     <div class="row mb-4">
@@ -108,10 +111,21 @@
         </div>
     </div>
 
-    <div class="row">
-        <div class="col-md-12">
-            <a href="{% url 'revenue_report' %}" class="btn btn-primary btn-sm">View Revenue Report</a>
-            <a href="{% url 'feedback_analysis' %}" class="btn btn-primary btn-sm">View Feedback Analysis</a>
+            <div class="row mt-4">
+                <div class="col-md-12">
+                    <button class="btn btn-primary btn-sm" onclick="loadContentRight('{% url 'revenue_report' %}')">View Revenue Report</button>
+                    <button class="btn btn-primary btn-sm" onclick="loadContentRight('{% url 'feedback_analysis' %}')">View Feedback Analysis</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Column: Content Area -->
+        <div class="col-md-6" style="max-height: 90vh; overflow-y: auto; border-left: 1px solid #ddd; padding-left: 20px;">
+            <div id="content-area">
+                <div class="text-center text-muted mt-5">
+                    <p>Click on a button to view detailed reports</p>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -142,5 +156,25 @@ new Chart(ctx, {
         maintainAspectRatio: true
     }
 });
+
+// Load content into right panel
+function loadContentRight(url) {
+    const contentArea = document.getElementById('content-area');
+    contentArea.innerHTML = '<div class="text-center"><div class="spinner-border" role="status"><span class="visually-hidden">Loading...</span></div></div>';
+    
+    fetch(url)
+        .then(response => response.text())
+        .then(html => {
+            // Extract main content from the response
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(html, 'text/html');
+            const mainContent = doc.querySelector('main') || doc.querySelector('[role="main"]') || doc.body;
+            contentArea.innerHTML = mainContent.innerHTML;
+        })
+        .catch(error => {
+            contentArea.innerHTML = '<div class="alert alert-danger">Error loading content. Please try again.</div>';
+            console.error('Error:', error);
+        });
+}
 </script>
 {% endblock %}

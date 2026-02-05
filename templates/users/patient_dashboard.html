@@ -4,38 +4,7 @@
 {% block title %}Patient Dashboard - MIC Radiology{% endblock %}
 
 {% block content %}
-<div class="container-fluid">
-    <div class="row">
-        <!-- Sidebar -->
-        <nav class="col-md-2 sidebar">
-            <div class="sidebar-sticky p-3">
-                <ul class="nav flex-column">
-                    <li class="nav-item">
-                        <a class="nav-link active" href="{% url 'patient_dashboard' %}">
-                            <i class="bi bi-house"></i> Dashboard
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'book_appointment' %}">
-                            <i class="bi bi-calendar-plus"></i> Book Appointment
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'appointment_list' %}">
-                            <i class="bi bi-calendar-check"></i> My Appointments
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'notification_list' %}">
-                            <i class="bi bi-bell"></i> Notifications
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </nav>
-
-        <!-- Main Content -->
-        <main class="col-md-10 dashboard-container">
+<div class="dashboard-container dashboard-theme">
             <!-- Header -->
             <div class="dashboard-header">
                 <h1>Welcome back, <span style="color: #16a085;">{{ user.first_name }}</span> 👋</h1>
@@ -110,7 +79,5 @@
                     </div>
                 </div>
             </div>
-        </main>
-    </div>
 </div>
 {% endblock %}
