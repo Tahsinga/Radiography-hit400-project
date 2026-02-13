@@ -12,5 +12,10 @@
     },
     "pylance.analysis.typeCheckingMode": "basic",
     "javascript.validate.enable": false,
-    "html.validate.scripts": false
+    "html.validate.scripts": false,
+    "html.validate.styles": true,
+    "[css]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "editor.formatOnSave": true
+    }
 }

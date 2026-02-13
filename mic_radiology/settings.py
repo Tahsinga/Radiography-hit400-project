@@ -4,6 +4,7 @@ Django settings for MIC Radiology Management System
 
 import os
 from pathlib import Path
+from typing import cast
 from decouple import config
 import dj_database_url
 
@@ -14,7 +15,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = config('SECRET_KEY', default='django-insecure-your-secret-key-change-in-production')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = config('DEBUG', default=True, cast=bool)
+DEBUG = config('DEBUG', default='True', cast=bool)
 
 ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='localhost,127.0.0.1,radiography-hit400-project.onrender.com,*.onrender.com', cast=lambda v: [s.strip() for s in v.split(',')])
 
@@ -77,11 +78,12 @@ TEMPLATES = [
 WSGI_APPLICATION = 'mic_radiology.wsgi.application'
 
 # Database - Use PostgreSQL on Render, SQLite in development
-if config('DATABASE_URL', default=''):
+database_url: str = cast(str, config('DATABASE_URL', default=''))
+if database_url:
     # Production (Render with PostgreSQL)
     DATABASES = {
         'default': dj_database_url.config(
-            default=config('DATABASE_URL'),
+            default=database_url,
             conn_max_age=600,
             conn_health_checks=True,
         )
@@ -145,8 +147,8 @@ CORS_ALLOWED_ORIGINS = [
 # Email Configuration (using console for development)
 EMAIL_BACKEND = config('EMAIL_BACKEND', default='django.core.mail.backends.console.EmailBackend')
 EMAIL_HOST = config('EMAIL_HOST', default='smtp.gmail.com')
-EMAIL_PORT = config('EMAIL_PORT', default=587, cast=int)
-EMAIL_USE_TLS = config('EMAIL_USE_TLS', default=True, cast=bool)
+EMAIL_PORT = config('EMAIL_PORT', default='587', cast=int)
+EMAIL_USE_TLS = config('EMAIL_USE_TLS', default='True', cast=bool)
 EMAIL_HOST_USER = config('EMAIL_HOST_USER', default='')
 EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD', default='')
 

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register - MIC Radiology</title>
+    <title>Create Account - MIC Radiology</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet">
     <style>
         * {
@@ -16,6 +16,7 @@
             height: 100%;
             width: 100%;
             overflow-x: hidden;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
         .modern-register-wrapper {
@@ -24,78 +25,181 @@
             align-items: center;
             justify-content: center;
             background: linear-gradient(135deg, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.5) 100%), 
-                        url('https://images.unsplash.com/photo-1505142468610-359e7d316be0?w=1920&q=80') no-repeat center;
+                        url('https://images.unsplash.com/photo-1511988617509-a57c8a288659?w=1920&q=80') no-repeat center;
             background-size: cover;
             background-attachment: fixed;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            padding: 20px;
+            padding: 15px;
         }
 
         .register-content {
             display: flex;
             width: 100%;
-            max-width: 800px;
-            min-height: 600px;
-            border-radius: 8px;
-            overflow: auto;
+            max-width: 1000px;
+            border-radius: 10px;
+            overflow: hidden;
             background: white;
-            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.4);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3), 0 0 40px rgba(30, 136, 229, 0.15);
             border: 1px solid rgba(255, 255, 255, 0.2);
+            animation: slideIn 0.5s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .register-left {
+            flex: 1;
+            background: linear-gradient(135deg, #1e88e5 0%, #1565c0 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 30px 25px;
+            color: white;
+            min-height: 420px;
+        }
+
+        .left-content {
+            text-align: center;
+            max-width: 85%;
+        }
+
+        .brand-icon {
+            font-size: 56px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.2);
+            width: 80px;
+            height: 80px;
+            border-radius: 16px;
+            margin-left: auto;
+            margin-right: auto;
+            margin-bottom: 20px;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .left-title {
+            font-size: 28px;
+            font-weight: 800;
+            margin-bottom: 12px;
+            line-height: 1.3;
+        }
+
+        .left-subtitle {
+            font-size: 13px;
+            opacity: 0.9;
+            line-height: 1.5;
+            margin-bottom: 20px;
+        }
+
+        .left-features {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 12px;
+            opacity: 0.9;
+        }
+
+        .feature-item i {
+            font-size: 18px;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 6px;
+            border-radius: 6px;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .register-right {
             flex: 1;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.98);
             display: flex;
-            align-items: center;
+            align-items: flex-start;
             justify-content: center;
-            padding: 30px;
-            border-radius: 20px;
+            padding: 30px 25px;
+            padding-top: 20px;
             overflow-y: auto;
-            max-height: none;
+            max-height: 520px;
         }
 
         .register-card {
             width: 100%;
-            max-width: 100%;
+            max-width: 420px;
             background: white;
-            border-radius: 8px;
-            padding: 25px;
-            box-shadow: none;
-            border: none;
-            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
         }
 
         .register-title {
-            font-size: 20px;
+            font-size: 26px;
             font-weight: 700;
             color: #333;
-            margin-bottom: 20px;
+            margin-bottom: 8px;
             text-align: center;
         }
 
+        .register-subtitle {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: 400;
+        }
+
         .form-group {
-            margin-bottom: 12px;
+            margin-bottom: 20px;
         }
 
         .form-label {
             display: block;
             font-weight: 600;
             color: #333;
-            margin-bottom: 5px;
-            font-size: 13px;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .form-label span {
+            color: #e53935;
         }
 
         .form-control, .form-select {
             width: 100%;
-            padding: 10px 12px;
+            padding: 12px 16px;
             border: 1px solid #e0e0e0;
             border-radius: 8px;
-            font-size: 13px;
+            font-size: 14px;
             transition: all 0.3s ease;
             background: #f8f9fa;
             font-family: inherit;
+            color: #333;
         }
 
         .form-control:focus, .form-select:focus {
@@ -103,6 +207,10 @@
             border-color: #1e88e5;
             background: white;
             box-shadow: 0 0 0 3px rgba(30, 136, 229, 0.1);
+        }
+
+        .form-control::placeholder {
+            color: #999;
         }
 
         .form-row {
@@ -119,11 +227,11 @@
 
         .btn {
             width: 100%;
-            padding: 10px;
+            padding: 12px;
             border: none;
             border-radius: 8px;
             font-weight: 600;
-            font-size: 13px;
+            font-size: 14px;
             cursor: pointer;
             transition: all 0.3s ease;
             text-transform: uppercase;
@@ -134,7 +242,7 @@
         .btn-register {
             background: linear-gradient(135deg, #1e88e5 0%, #1565c0 100%);
             color: white;
-            margin-bottom: 10px;
+            margin-bottom: 15px;
             margin-top: 10px;
             box-shadow: 0 4px 15px rgba(30, 136, 229, 0.3);
         }
@@ -146,23 +254,27 @@
             color: white;
         }
 
+        .btn-register:active {
+            transform: translateY(0);
+        }
+
         .field-section-title {
-            font-size: 11px;
-            font-weight: 700;
+            font-size: 13px;
+            font-weight: 600;
             color: #1e88e5;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-top: 10px;
+            letter-spacing: 0.5px;
+            margin-top: 15px;
             margin-bottom: 10px;
             padding-bottom: 8px;
-            border-bottom: 2px solid #e0e0e0;
+            border-bottom: 1px solid #e0e0e0;
         }
 
         .divider {
             text-align: center;
-            margin: 12px 0;
+            margin: 20px 0;
             color: #999;
-            font-size: 12px;
+            font-size: 13px;
             font-weight: 500;
             position: relative;
         }
@@ -178,126 +290,250 @@
         }
 
         .divider span {
-            background: white;
-            padding: 0 8px;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 0 10px;
             position: relative;
             z-index: 1;
         }
 
         .login-link {
             text-align: center;
-            font-size: 12px;
+            font-size: 13px;
             color: #666;
         }
 
         .login-link a {
             color: #1e88e5;
             text-decoration: none;
-            font-weight: 600;
+            font-weight: 700;
             transition: color 0.3s;
         }
 
         .login-link a:hover {
             color: #1565c0;
-            text-decoration: underline;
         }
 
-        @media (max-width: 1100px) {
+        .alert {
+            margin-bottom: 20px;
+            border-radius: 8px;
+            font-size: 14px;
+            padding: 12px 16px;
+            border: 1px solid;
+            flex-shrink: 0;
+        }
+
+        .alert-success {
+            background-color: #d4edda;
+            border-color: #c3e6cb;
+            color: #155724;
+        }
+
+        .alert-error {
+            background-color: #f8d7da;
+            border-color: #f5c6cb;
+            color: #721c24;
+        }
+
+        @media (max-width: 1024px) {
             .register-content {
                 flex-direction: column;
-                height: auto;
-                max-width: 600px;
+                border-radius: 20px;
+            }
+
+            .register-left {
+                min-height: 200px;
+                padding: 30px 20px;
             }
 
             .register-right {
-                border-radius: 20px;
                 max-height: none;
+                padding: 30px 20px;
+            }
+
+            .left-title {
+                font-size: 24px;
+            }
+
+            .register-title {
+                font-size: 24px;
             }
         }
 
-        @media (max-width: 876px) {
+        @media (max-width: 768px) {
+            .modern-register-wrapper {
+                padding: 10px;
+            }
+
             .register-content {
-                max-height: none;
-                height: auto;
-                min-height: 100vh;
+                flex-direction: column;
+            }
+
+            .register-left {
+                display: flex;
+                min-height: 280px;
+                background: rgba(30, 136, 229, 0.2) !important;
+                backdrop-filter: blur(5px);
+                border-bottom: 1px solid rgba(255, 255, 255, 0.2);
             }
 
             .register-right {
-                padding: 15px;
-                background: rgba(255, 255, 255, 0.85);
+                padding: 20px;
+                max-height: none;
+                background: rgba(255, 255, 255, 0.95);
             }
 
             .register-card {
-                padding: 15px;
+                max-width: 100%;
             }
 
-            .btn {
-                padding: 8px;
-                font-size: 12px;
+            .register-title {
+                font-size: 24px;
             }
 
-            .brand-logo {
-                width: 60px;
-                height: 60px;
-                font-size: 36px;
+            .register-subtitle {
+                font-size: 14px;
             }
 
             .form-row, .form-row-three {
                 grid-template-columns: 1fr;
             }
 
-            .register-title {
-                font-size: 18px;
-            }
-        }
-
-        @media (max-width: 576px) {
-            .register-content {
-                background: rgba(255, 255, 255, 0);
-                box-shadow: none;
-                border: none;
-            }
-
-            .register-right {
-                background: rgba(255, 255, 255, 0);
-                padding: 15px;
-            }
-
-            .register-card {
-                background: rgba(255, 255, 255, 0);
-                box-shadow: none;
-                border: none;
-                padding: 15px;
+            .btn {
+                padding: 12px;
+                font-size: 14px;
             }
 
             .form-control, .form-select {
-                background: rgba(248, 249, 250, 0.6);
-                border: 1px solid rgba(224, 224, 224, 0.5);
-            }
-
-            .register-title {
-                font-size: 18px;
-                color: white;
-                text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+                padding: 12px 16px;
+                font-size: 14px;
             }
 
             .form-label {
-                color: rgba(255, 255, 255, 0.95);
-                text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);
+                font-size: 14px;
+                margin-bottom: 8px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .modern-register-wrapper {
+                background: linear-gradient(135deg, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.5) 100%), 
+                            url('https://images.unsplash.com/photo-1511988617509-a57c8a288659?w=1920&q=80') no-repeat center;
+                background-size: cover;
+                background-attachment: fixed;
+                padding: 10px;
             }
 
-            .btn {
-                padding: 8px;
+            .register-content {
+                flex-direction: column;
+                border-radius: 16px;
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            }
+
+            .register-left {
+                display: flex;
+                min-height: 240px;
+                padding: 20px 15px;
+                background: rgba(30, 136, 229, 0.15) !important;
+                backdrop-filter: blur(8px);
+                border-radius: 16px 16px 0 0;
+            }
+
+            .left-content {
+                max-width: 100%;
+            }
+
+            .brand-icon {
+                width: 60px;
+                height: 60px;
+                font-size: 40px;
+                margin-bottom: 12px;
+            }
+
+            .left-title {
+                font-size: 20px;
+                margin-bottom: 8px;
+            }
+
+            .left-subtitle {
                 font-size: 12px;
+                margin-bottom: 12px;
+            }
+
+            .left-features {
+                gap: 8px;
+                margin-top: 8px;
+            }
+
+            .feature-item {
+                font-size: 11px;
+            }
+
+            .register-right {
+                padding: 16px;
+                background: white;
+            }
+
+            .register-card {
+                padding: 0;
+            }
+
+            .register-title {
+                font-size: 30px;
+                margin-bottom: 8px;
+            }
+
+            .register-subtitle {
+                font-size: 14px;
+                margin-bottom: 20px;
+            }
+
+            .form-group {
+                margin-bottom: 16px;
+            }
+
+            .form-label {
+                font-size: 14px;
+            }
+
+            .form-control, .form-select {
+                padding: 12px 16px;
+                font-size: 14px;
+                border: 1px solid #e0e0e0;
             }
 
             .form-row, .form-row-three {
-                grid-template-columns: 1fr;
+                gap: 12px;
+                margin-bottom: 0;
             }
 
-            .divider, .login-link, .login-link a {
-                color: rgba(255, 255, 255, 0.9);
-                text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);
+            .btn {
+                padding: 12px;
+                font-size: 13px;
+            }
+
+            .btn-register {
+                margin-top: 10px;
+                margin-bottom: 15px;
+            }
+
+            .field-section-title {
+                font-size: 13px;
+                margin-top: 15px;
+                margin-bottom: 10px;
+            }
+
+            .divider {
+                margin: 20px 0;
+                font-size: 13px;
+            }
+
+            .login-link {
+                font-size: 13px;
+            }
+
+            .alert {
+                font-size: 14px;
+                padding: 12px 16px;
             }
         }
     </style>
@@ -305,6 +541,36 @@
 <body>
 <div class="modern-register-wrapper">
     <div class="register-content">
+        <!-- Left Section - Desktop Only -->
+        <div class="register-left">
+            <div class="left-content">
+                <div class="brand-icon">
+                    <i class="bi bi-hospital"></i>
+                </div>
+                <h1 class="left-title">Join MIC Radiology</h1>
+                <p class="left-subtitle">Get access to world-class radiography services and manage your health with ease.</p>
+                
+                <div class="left-features">
+                    <div class="feature-item">
+                        <i class="bi bi-shield-check"></i>
+                        <span>Secure & Encrypted</span>
+                    </div>
+                    <div class="feature-item">
+                        <i class="bi bi-clock-history"></i>
+                        <span>Instant Access to Records</span>
+                    </div>
+                    <div class="feature-item">
+                        <i class="bi bi-person-check"></i>
+                        <span>Professional Support</span>
+                    </div>
+                    <div class="feature-item">
+                        <i class="bi bi-graph-up"></i>
+                        <span>Track Your Health</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- Right Section -->
         <div class="register-right">
             <div class="register-card">
@@ -317,6 +583,7 @@
                 {% endif %}
 
                 <h2 class="register-title">Create Your Account</h2>
+                <p class="register-subtitle">Choose your role and fill in your details</p>
 
                 <form method="post" enctype="multipart/form-data" class="register-form">
                     {% csrf_token %}
@@ -324,14 +591,14 @@
                     <!-- User Role Selection -->
                     <div class="form-row">
                         <div class="form-group">
-                            <label for="role" class="form-label">User Role *</label>
+                            <label for="role" class="form-label">User Role <span>*</span></label>
                             <select name="role" id="role" class="form-select" required onchange="updateForm()">
                                 <option value="patient" selected>Patient</option>
                                 <option value="doctor">Referral Doctor</option>
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="email" class="form-label">Email *</label>
+                            <label for="email" class="form-label">Email <span>*</span></label>
                             {{ form.email }}
                         </div>
                     </div>
@@ -339,11 +606,11 @@
                     <!-- Name & Username -->
                     <div class="form-row">
                         <div class="form-group">
-                            <label for="first_name" class="form-label">First Name *</label>
+                            <label for="first_name" class="form-label">First Name <span>*</span></label>
                             {{ form.first_name }}
                         </div>
                         <div class="form-group">
-                            <label for="last_name" class="form-label">Last Name *</label>
+                            <label for="last_name" class="form-label">Last Name <span>*</span></label>
                             {{ form.last_name }}
                         </div>
                     </div>
@@ -351,18 +618,18 @@
                     <!-- Username & Phone -->
                     <div class="form-row">
                         <div class="form-group">
-                            <label for="username" class="form-label">Username *</label>
+                            <label for="username" class="form-label">Username <span>*</span></label>
                             {{ form.username }}
                         </div>
                         <div class="form-group">
-                            <label for="phone_number" class="form-label">Phone Number *</label>
+                            <label for="phone_number" class="form-label">Phone Number <span>*</span></label>
                             {{ form.phone_number }}
                         </div>
                     </div>
 
                     <!-- Patient Specific Fields -->
                     <div id="patientFields" class="conditional-fields show">
-                        <div class="field-section-title">Patient Information</div>
+                        <div class="field-section-title">📋 Patient Information</div>
                         <div class="form-row">
                             <div class="form-group">
                                 <label for="date_of_birth" class="form-label">Date of Birth</label>
@@ -392,11 +659,11 @@
 
                     <!-- Doctor Specific Fields -->
                     <div id="doctorFields" class="conditional-fields">
-                        <div class="field-section-title">Professional Information</div>
+                        <div class="field-section-title">🏥 Professional Information</div>
                         <div class="form-row">
                             <div class="form-group">
-                                <label for="license_number" class="form-label">License Number *</label>
-                                <input type="text" name="license_number" class="form-control" placeholder="Your medical license number">
+                                <label for="license_number" class="form-label">License Number <span>*</span></label>
+                                <input type="text" name="license_number" class="form-control" placeholder="Your medical license">
                             </div>
                             <div class="form-group">
                                 <label for="specialization" class="form-label">Specialization</label>
@@ -412,16 +679,16 @@
                     <!-- Password Fields -->
                     <div class="form-row">
                         <div class="form-group">
-                            <label for="password1" class="form-label">Password *</label>
+                            <label for="password1" class="form-label">Password <span>*</span></label>
                             {{ form.password1 }}
                         </div>
                         <div class="form-group">
-                            <label for="password2" class="form-label">Confirm Password *</label>
+                            <label for="password2" class="form-label">Confirm Password <span>*</span></label>
                             {{ form.password2 }}
                         </div>
                     </div>
 
-                    <button type="submit" class="btn btn-register">CREATE ACCOUNT</button>
+                    <button type="submit" class="btn btn-register">✓ Create Account</button>
                 </form>
 
                 <div class="divider">
@@ -429,7 +696,7 @@
                 </div>
 
                 <div class="login-link">
-                    Already have an account? <a href="{% url 'login' %}">Sign in here</a>
+                    Already have an account? <a href="{% url 'login' %}">Sign in</a>
                 </div>
             </div>
         </div>

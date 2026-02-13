@@ -3,107 +3,367 @@
 {% block title %}Appointment Detail - MIC Radiology{% endblock %}
 
 {% block content %}
-<div class="card">
-    <div class="card-header">
-        <h5 class="mb-0">Appointment Details</h5>
-    </div>
-    <div class="card-body">
-        <div class="row mb-3">
-            <div class="col-md-6">
-                <h6>Scan Type</h6>
-                <p>{{ appointment.scan_type.name }}</p>
-            </div>
-            <div class="col-md-6">
-                <h6>Status</h6>
-                <p>
-                    <span class="badge bg-{% if appointment.status == 'completed' %}success{% elif appointment.status == 'confirmed' %}primary{% elif appointment.status == 'pending' %}warning{% elif appointment.status == 'cancelled' %}danger{% else %}secondary{% endif %}">
-                        {{ appointment.get_status_display }}
-                    </span>
-                </p>
-            </div>
-        </div>
+<style>
+    :root {
+        --primary-color: #1e88e5;
+        --primary-dark: #1565c0;
+        --success-color: #4caf50;
+    }
 
-        <div class="row mb-3">
-            <div class="col-md-6">
-                <h6>Date</h6>
-                <p>{{ appointment.appointment_date|date:"F j, Y" }}</p>
-            </div>
-            <div class="col-md-6">
-                <h6>Time</h6>
-                <p>{{ appointment.appointment_time|time:"H:i" }}</p>
-            </div>
-        </div>
+    body {
+        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        min-height: 100vh;
+    }
 
-        {% if appointment.referring_doctor %}
-        <div class="row mb-3">
-            <div class="col-md-12">
-                <h6>Referring Doctor</h6>
-                <p>{{ appointment.referring_doctor.get_full_name }}</p>
-            </div>
-        </div>
-        {% endif %}
+    .appointment-wrapper {
+        max-width: 900px;
+        margin: 30px auto;
+        padding: 0 15px;
+    }
 
-        {% if appointment.clinical_notes %}
-        <div class="row mb-3">
-            <div class="col-md-12">
-                <h6>Clinical Notes</h6>
-                <p>{{ appointment.clinical_notes }}</p>
-            </div>
-        </div>
-        {% endif %}
+    .modern-card {
+        background: white;
+        border-radius: 16px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        border: 1px solid rgba(30, 136, 229, 0.1);
+        overflow: hidden;
+        transition: all 0.3s ease;
+        animation: slideIn 0.6s ease-out;
+    }
 
-        {% if payment %}
-        <div class="card mt-3">
-            <div class="card-header">
-                <h6 class="mb-0">Payment Information</h6>
-            </div>
-            <div class="card-body">
-                <div class="row">
-                    <div class="col-md-4">
-                        <small class="text-muted">Service Charge</small>
-                        <p class="mb-0">R{{ payment.service_charge }}</p>
+    @keyframes slideIn {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .card-header-modern {
+        background: linear-gradient(135deg, #1e88e5 0%, #1565c0 100%);
+        color: white;
+        padding: 25px;
+    }
+
+    .card-header-modern h4 {
+        font-size: 24px;
+        font-weight: 800;
+        margin: 0;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .card-header-modern h4 i {
+        font-size: 28px;
+    }
+
+    .card-body-modern {
+        padding: 30px;
+    }
+
+    .detail-section {
+        margin-bottom: 30px;
+        padding-bottom: 30px;
+        border-bottom: 1px solid #f0f0f0;
+    }
+
+    .detail-section:last-child {
+        border-bottom: none;
+        margin-bottom: 0;
+        padding-bottom: 0;
+    }
+
+    .detail-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+    }
+
+    .detail-item {
+        background: #f9f9f9;
+        padding: 16px;
+        border-radius: 10px;
+        border-left: 4px solid #1e88e5;
+    }
+
+    .detail-label {
+        font-size: 12px;
+        font-weight: 700;
+        color: #1e88e5;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-bottom: 6px;
+    }
+
+    .detail-value {
+        font-size: 16px;
+        font-weight: 600;
+        color: #1a1a1a;
+        margin: 0;
+    }
+
+    .section-title {
+        font-size: 16px;
+        font-weight: 700;
+        color: #1a1a1a;
+        margin-bottom: 18px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .section-title i {
+        color: #1e88e5;
+        font-size: 20px;
+    }
+
+    .status-badge {
+        display: inline-block;
+        padding: 8px 14px;
+        border-radius: 8px;
+        font-size: 12px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .status-completed {
+        background: #d1e7dd;
+        color: #0f5132;
+    }
+
+    .status-confirmed {
+        background: #cfe2ff;
+        color: #084298;
+    }
+
+    .status-pending {
+        background: #fff3cd;
+        color: #856404;
+    }
+
+    .status-cancelled {
+        background: #f8d7da;
+        color: #842029;
+    }
+
+    .button-group {
+        display: flex;
+        gap: 12px;
+        margin-top: 30px;
+        flex-wrap: wrap;
+    }
+
+    .btn-modern {
+        padding: 12px 24px;
+        border: none;
+        border-radius: 10px;
+        font-weight: 700;
+        font-size: 14px;
+        cursor: pointer;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        transition: all 0.3s ease;
+    }
+
+    .btn-primary-modern {
+        background: linear-gradient(135deg, #1e88e5 0%, #1565c0 100%);
+        color: white;
+        box-shadow: 0 4px 15px rgba(30, 136, 229, 0.3);
+    }
+
+    .btn-primary-modern:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(30, 136, 229, 0.4);
+        color: white;
+    }
+
+    .btn-secondary-modern {
+        background: white;
+        color: #1e88e5;
+        border: 2px solid #1e88e5;
+    }
+
+    .btn-secondary-modern:hover {
+        background: #f5f7fa;
+        color: #1565c0;
+        border-color: #1565c0;
+    }
+
+    .btn-danger-modern {
+        background: white;
+        color: #f44336;
+        border: 2px solid #f44336;
+    }
+
+    .btn-danger-modern:hover {
+        background: #fff8f8;
+        color: #d32f2f;
+        border-color: #d32f2f;
+    }
+
+    .notes-box {
+        background: #f9f9f9;
+        padding: 16px;
+        border-radius: 10px;
+        border-left: 4px solid #1e88e5;
+        line-height: 1.6;
+        color: #555;
+    }
+
+    @media (max-width: 768px) {
+        .appointment-wrapper {
+            margin: 20px auto;
+        }
+
+        .card-header-modern h4 {
+            font-size: 20px;
+        }
+
+        .detail-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .button-group {
+            flex-direction: column;
+        }
+
+        .btn-modern {
+            width: 100%;
+            justify-content: center;
+        }
+    }
+</style>
+
+<div class="appointment-wrapper">
+    <div class="modern-card">
+        <div class="card-header-modern">
+            <h4><i class="bi bi-calendar-check"></i> Appointment Details</h4>
+        </div>
+        
+        <div class="card-body-modern">
+            <!-- Scan Type & Status -->
+            <div class="detail-section">
+                <div class="detail-grid">
+                    <div class="detail-item">
+                        <div class="detail-label">Scan Type</div>
+                        <p class="detail-value">{{ appointment.scan_type.name }}</p>
                     </div>
-                    <div class="col-md-4">
-                        <small class="text-muted">Medical Aid Coverage</small>
-                        <p class="mb-0">R{{ payment.medical_aid_coverage_amount }}</p>
-                    </div>
-                    <div class="col-md-4">
-                        <small class="text-muted">Patient Co-payment</small>
-                        <p class="mb-0">R{{ payment.patient_co_payment }}</p>
+                    <div class="detail-item">
+                        <div class="detail-label">Status</div>
+                        <div style="margin-top: 4px;">
+                            <span class="status-badge status-{{ appointment.status|lower }}">
+                                {{ appointment.get_status_display }}
+                            </span>
+                        </div>
                     </div>
                 </div>
-                <div class="row mt-3">
-                    <div class="col-md-12">
-                        <span class="badge bg-{% if payment.is_paid %}success{% else %}warning{% endif %}">
-                            {{ payment.get_status_display }}
+            </div>
+
+            <!-- Date & Time -->
+            <div class="detail-section">
+                <div class="detail-grid">
+                    <div class="detail-item">
+                        <div class="detail-label">Appointment Date</div>
+                        <p class="detail-value">{{ appointment.appointment_date|date:"F j, Y" }}</p>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Appointment Time</div>
+                        <p class="detail-value">{{ appointment.appointment_time|time:"H:i" }}</p>
+                    </div>
+                </div>
+            </div>
+
+            {% if appointment.referring_doctor %}
+            <!-- Referring Doctor -->
+            <div class="detail-section">
+                <h6 class="section-title"><i class="bi bi-person-badge"></i> Referring Doctor</h6>
+                <div class="detail-item">
+                    <p class="detail-value">{{ appointment.referring_doctor.get_full_name }}</p>
+                </div>
+            </div>
+            {% endif %}
+
+            {% if appointment.clinical_notes %}
+            <!-- Clinical Notes -->
+            <div class="detail-section">
+                <h6 class="section-title"><i class="bi bi-file-text"></i> Clinical Notes</h6>
+                <div class="notes-box">
+                    {{ appointment.clinical_notes }}
+                </div>
+            </div>
+            {% endif %}
+
+            {% if payment %}
+            <!-- Payment Information -->
+            <div class="detail-section">
+                <h6 class="section-title"><i class="bi bi-credit-card"></i> Payment Information</h6>
+                <div class="detail-grid">
+                    <div class="detail-item">
+                        <div class="detail-label">Service Charge</div>
+                        <p class="detail-value">R{{ payment.service_charge }}</p>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Medical Aid Coverage</div>
+                        <p class="detail-value">R{{ payment.medical_aid_coverage_amount }}</p>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Your Co-Payment</div>
+                        <p class="detail-value" style="color: #f44336;">R{{ payment.patient_co_payment }}</p>
+                    </div>
+                </div>
+                <div style="margin-top: 15px;">
+                    <span class="status-badge {% if payment.is_paid %}status-completed{% else %}status-pending{% endif %}">
+                        {{ payment.get_status_display }}
+                    </span>
+                </div>
+            </div>
+            {% endif %}
+
+            {% if report %}
+            <!-- Report -->
+            <div class="detail-section">
+                <h6 class="section-title"><i class="bi bi-file-earmark-pdf"></i> Report</h6>
+                <div class="detail-item">
+                    <div class="detail-label">Status</div>
+                    <div style="margin-top: 4px; margin-bottom: 12px;">
+                        <span class="status-badge status-{% if report.status == 'completed' %}completed{% else %}pending{% endif %}">
+                            {{ report.get_status_display }}
                         </span>
                     </div>
+                    <div class="button-group" style="margin-top: 12px;">
+                        <a href="{% url 'view_report' report.id %}" class="btn-modern btn-primary-modern">
+                            <i class="bi bi-eye"></i> View Report
+                        </a>
+                        {% if report.pdf_file %}
+                        <a href="{% url 'download_report' report.id %}" class="btn-modern btn-primary-modern">
+                            <i class="bi bi-download"></i> Download PDF
+                        </a>
+                        {% endif %}
+                    </div>
                 </div>
             </div>
-        </div>
-        {% endif %}
+            {% endif %}
 
-        {% if report %}
-        <div class="card mt-3">
-            <div class="card-header">
-                <h6 class="mb-0">Report</h6>
-            </div>
-            <div class="card-body">
-                <p>Report Status: <span class="badge bg-info">{{ report.get_status_display }}</span></p>
-                <a href="{% url 'view_report' report.id %}" class="btn btn-sm btn-primary">View Report</a>
-                {% if report.pdf_file %}
-                <a href="{% url 'download_report' report.id %}" class="btn btn-sm btn-success">Download PDF</a>
+            <!-- Action Buttons -->
+            <div class="button-group">
+                <a href="{% url 'appointment_list' %}" class="btn-modern btn-secondary-modern">
+                    <i class="bi bi-arrow-left"></i> Back to Appointments
+                </a>
+                {% if appointment.can_be_cancelled %}
+                <a href="{% url 'cancel_appointment' appointment.id %}" class="btn-modern btn-danger-modern" onclick="return confirm('Are you sure you want to cancel this appointment?')">
+                    <i class="bi bi-trash"></i> Cancel Appointment
+                </a>
                 {% endif %}
             </div>
         </div>
-        {% endif %}
-
-        <div class="mt-4">
-            <a href="{% url 'appointment_list' %}" class="btn btn-secondary">Back to Appointments</a>
-            {% if appointment.can_be_cancelled %}
-            <a href="{% url 'cancel_appointment' appointment.id %}" class="btn btn-danger" onclick="return confirm('Are you sure you want to cancel this appointment?')">Cancel Appointment</a>
-            {% endif %}
-        </div>
     </div>
 </div>
+
 {% endblock %}
