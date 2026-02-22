@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block title %}Delete Scan - MIC Radiology{% endblock %}
+
+{% block content %}
+<div style="max-width:700px;margin:28px auto;padding:0 12px;">
+    <div style="background:#fff;padding:18px;border-radius:8px;box-shadow:0 6px 18px rgba(2,6,23,0.04);">
+        <h3>Delete Scan</h3>
+        <p>Are you sure you want to delete the scan type "<strong>{{ scan.name }}</strong>"? This action cannot be undone.</p>
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn-primary">Delete</button>
+            <a href="{% url 'manage_scans' %}" class="btn-ghost">Cancel</a>
+        </form>
+    </div>
+</div>
+{% endblock %}

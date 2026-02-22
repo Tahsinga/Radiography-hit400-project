@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create Account - MIC Radiology</title>
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet">
     <style>
         * {
@@ -15,98 +16,122 @@
         html, body {
             height: 100%;
             width: 100%;
-            overflow-x: hidden;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden;
         }
 
         .modern-register-wrapper {
-            min-height: 100vh;
+            min-height: 10vh;
+            max-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            background: linear-gradient(135deg, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.5) 100%), 
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.6) 100%),
                         url('https://images.unsplash.com/photo-1511988617509-a57c8a288659?w=1920&q=80') no-repeat center;
             background-size: cover;
+            color: #ffffff;
             background-attachment: fixed;
-            padding: 15px;
+            font-family: 'Google Sans', sans-serif;
+            padding: 20px;
         }
 
         .register-content {
             display: flex;
             width: 100%;
-            max-width: 1000px;
+            margin: 20px;
+            max-width: 900px;
+            min-height: 30px;
+            max-height: 520px;
             border-radius: 10px;
-            overflow: hidden;
+            overflow: auto;
             background: white;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3), 0 0 40px rgba(30, 136, 229, 0.15);
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.4);
             border: 1px solid rgba(255, 255, 255, 0.2);
-            animation: slideIn 0.5s ease-out;
-        }
-
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
         }
 
         .register-left {
             flex: 1;
-            background: linear-gradient(135deg, #1e88e5 0%, #1565c0 100%);
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.6) 100%),
+                        url('https://images.unsplash.com/photo-1511988617509-a57c8a288659?w=1920&q=80') no-repeat center;
+            background-size: cover;
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 30px 25px;
-            color: white;
-            min-height: 420px;
+            color: #ffffff;
+            padding: 40px;
+            border-radius: 5px 0 0 5px;
         }
 
         .left-content {
             text-align: center;
-            max-width: 85%;
+            max-width: 90%;
         }
 
         .brand-icon {
-            font-size: 56px;
-            margin-bottom: 15px;
+            font-size: 48px;
+            margin-bottom: 20px;
             display: flex;
             align-items: center;
-            justify-content: center;
+            justify-content: center; 
             background: rgba(255, 255, 255, 0.2);
-            width: 80px;
-            height: 80px;
-            border-radius: 16px;
+            width: 70px;
+            height: 70px;
+            border-radius: 10px;
             margin-left: auto;
             margin-right: auto;
-            margin-bottom: 20px;
-            animation: float 3s ease-in-out infinite;
+            margin-bottom: 30px;
         }
 
-        @keyframes float {
-            0%, 100% {
-                transform: translateY(0px);
-            }
-            50% {
-                transform: translateY(-10px);
-            }
+        .main-title {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 30px;
+            font-weight: 800;
+        }
+
+        .subtitle-small {
+            font-size: 16px;
+            letter-spacing: 3px;
+            opacity: 0.9;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .title-main {
+            font-size: 56px;
+            line-height: 1.2;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .tagline {
+            font-size: 20px;
+            font-weight: 300;
+            margin-bottom: 15px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+        }
+
+        .description {
+            font-size: 14px;
+            opacity: 0.9;
+            line-height: 1.6;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
         }
 
         .left-title {
-            font-size: 28px;
+            font-size: 56px;
             font-weight: 800;
             margin-bottom: 12px;
             line-height: 1.3;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
         }
 
         .left-subtitle {
-            font-size: 13px;
+            font-size: 14px;
             opacity: 0.9;
-            line-height: 1.5;
+            line-height: 1.6;
             margin-bottom: 20px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
         }
 
         .left-features {
@@ -136,30 +161,45 @@
             justify-content: center;
         }
 
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
         .register-right {
             flex: 1;
-            background: rgba(255, 255, 255, 0.98);
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
             display: flex;
             align-items: flex-start;
             justify-content: center;
-            padding: 30px 25px;
-            padding-top: 20px;
+            padding: 40px;
+            border-radius: 0 20px 20px 0;
             overflow-y: auto;
-            max-height: 520px;
+            max-height: 100vh;
+            min-height: 300px;
+            padding-top: 40px;
         }
 
         .register-card {
             width: 100%;
             max-width: 420px;
             background: white;
-            border-radius: 16px;
-            padding: 0;
+            border-radius: 5px;
+            padding: 40px;
+            /* box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2), 0 0 40px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px); */
             display: flex;
             flex-direction: column;
         }
 
         .register-title {
-            font-size: 26px;
+            font-size: 24px;
             font-weight: 700;
             color: #333;
             margin-bottom: 8px;
@@ -167,35 +207,31 @@
         }
 
         .register-subtitle {
-            font-size: 14px;
+            font-size: 13px;
             color: #666;
-            margin-bottom: 20px;
+            margin-bottom: 24px;
             text-align: center;
             font-weight: 400;
         }
 
         .form-group {
-            margin-bottom: 20px;
+            margin-bottom: 16px;
         }
 
         .form-label {
             display: block;
             font-weight: 600;
             color: #333;
-            margin-bottom: 8px;
-            font-size: 14px;
-        }
-
-        .form-label span {
-            color: #e53935;
+            margin-bottom: 6px;
+            font-size: 13px;
         }
 
         .form-control, .form-select {
             width: 100%;
-            padding: 12px 16px;
+            padding: 10px 14px;
             border: 1px solid #e0e0e0;
-            border-radius: 8px;
-            font-size: 14px;
+            border-radius: 6px;
+            font-size: 13px;
             transition: all 0.3s ease;
             background: #f8f9fa;
             font-family: inherit;
@@ -204,9 +240,9 @@
 
         .form-control:focus, .form-select:focus {
             outline: none;
-            border-color: #1e88e5;
+            border-color: #1a1a1a;
             background: white;
-            box-shadow: 0 0 0 3px rgba(30, 136, 229, 0.1);
+            box-shadow: 0 0 0 3px rgba(26, 26, 26, 0.1);
         }
 
         .form-control::placeholder {
@@ -240,17 +276,17 @@
         }
 
         .btn-register {
-            background: linear-gradient(135deg, #1e88e5 0%, #1565c0 100%);
+            background: #333333;
             color: white;
             margin-bottom: 15px;
-            margin-top: 10px;
-            box-shadow: 0 4px 15px rgba(30, 136, 229, 0.3);
+            margin-top: 8px;
+            box-shadow: 0 4px 15px rgba(51, 51, 51, 0.3);
         }
 
         .btn-register:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(30, 136, 229, 0.4);
-            background: linear-gradient(135deg, #1565c0 0%, #0d47a1 100%);
+            box-shadow: 0 6px 20px rgba(51, 51, 51, 0.4);
+            background: #1a1a1a;
             color: white;
         }
 
@@ -259,22 +295,22 @@
         }
 
         .field-section-title {
-            font-size: 13px;
-            font-weight: 600;
-            color: #1e88e5;
+            font-size: 12px;
+            font-weight: 700;
+            color: #1a1a1a;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-top: 15px;
-            margin-bottom: 10px;
+            letter-spacing: 0.7px;
+            margin-top: 12px;
+            margin-bottom: 12px;
             padding-bottom: 8px;
             border-bottom: 1px solid #e0e0e0;
         }
 
         .divider {
             text-align: center;
-            margin: 20px 0;
+            margin: 16px 0;
             color: #999;
-            font-size: 13px;
+            font-size: 12px;
             font-weight: 500;
             position: relative;
         }
@@ -303,22 +339,26 @@
         }
 
         .login-link a {
-            color: #1e88e5;
+            color: #1a1a1a;
             text-decoration: none;
-            font-weight: 700;
+            font-weight: 600;
             transition: color 0.3s;
         }
 
         .login-link a:hover {
-            color: #1565c0;
+            color: #333333;
+            text-decoration: underline;
         }
 
         .alert {
-            margin-bottom: 20px;
-            border-radius: 8px;
-            font-size: 14px;
-            padding: 12px 16px;
+            margin-bottom: 16px;
+            margin-top: 0;
+            border-radius: 6px;
+            font-size: 12px;
+            padding: 10px 14px;
             border: 1px solid;
+            max-height: 60px;
+            overflow-y: auto;
             flex-shrink: 0;
         }
 
@@ -334,206 +374,119 @@
             color: #721c24;
         }
 
-        @media (max-width: 1024px) {
+        @media (max-width: 900px) {
             .register-content {
                 flex-direction: column;
-                border-radius: 20px;
+                height: auto;
+                max-width: 600px;
             }
 
             .register-left {
-                min-height: 200px;
-                padding: 30px 20px;
+                padding: 40px 20px;
+                min-height: 250px;
+                border-radius: 20px 20px 0 0;
             }
 
             .register-right {
-                max-height: none;
+                border-radius: 0 0 20px 20px;
                 padding: 30px 20px;
+                align-items: flex-start;
+                padding-top: 20px;
             }
 
-            .left-title {
-                font-size: 24px;
+            .title-main {
+                font-size: 40px;
             }
 
-            .register-title {
-                font-size: 24px;
+            .tagline {
+                font-size: 16px;
+            }
+
+            .description {
+                font-size: 13px;
             }
         }
 
-        @media (max-width: 768px) {
-            .modern-register-wrapper {
-                padding: 10px;
-            }
-
-            .register-content {
-                flex-direction: column;
-            }
-
+        @media (max-width: 576px) {
             .register-left {
-                display: flex;
-                min-height: 280px;
-                background: rgba(30, 136, 229, 0.2) !important;
-                backdrop-filter: blur(5px);
-                border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+                padding: 20px 15px;
+                min-height: 150px;
             }
 
             .register-right {
-                padding: 20px;
-                max-height: none;
-                background: rgba(255, 255, 255, 0.95);
+                padding: 15px;
+                align-items: flex-start;
+                padding-top: 20px;
             }
 
             .register-card {
+                padding: 16px;
                 max-width: 100%;
+                border-radius: 12px;
             }
 
-            .register-title {
-                font-size: 24px;
+            .title-main {
+                font-size: 32px;
             }
 
-            .register-subtitle {
+            .subtitle-small {
+                font-size: 13px;
+            }
+
+            .tagline {
                 font-size: 14px;
-            }
-
-            .form-row, .form-row-three {
-                grid-template-columns: 1fr;
             }
 
             .btn {
-                padding: 12px;
-                font-size: 14px;
-            }
-
-            .form-control, .form-select {
-                padding: 12px 16px;
-                font-size: 14px;
-            }
-
-            .form-label {
-                font-size: 14px;
-                margin-bottom: 8px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .modern-register-wrapper {
-                background: linear-gradient(135deg, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.5) 100%), 
-                            url('https://images.unsplash.com/photo-1511988617509-a57c8a288659?w=1920&q=80') no-repeat center;
-                background-size: cover;
-                background-attachment: fixed;
                 padding: 10px;
-            }
-
-            .register-content {
-                flex-direction: column;
-                border-radius: 16px;
-                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            }
-
-            .register-left {
-                display: flex;
-                min-height: 240px;
-                padding: 20px 15px;
-                background: rgba(30, 136, 229, 0.15) !important;
-                backdrop-filter: blur(8px);
-                border-radius: 16px 16px 0 0;
-            }
-
-            .left-content {
-                max-width: 100%;
+                font-size: 12px;
             }
 
             .brand-icon {
                 width: 60px;
                 height: 60px;
-                font-size: 40px;
-                margin-bottom: 12px;
-            }
-
-            .left-title {
-                font-size: 20px;
-                margin-bottom: 8px;
-            }
-
-            .left-subtitle {
-                font-size: 12px;
-                margin-bottom: 12px;
-            }
-
-            .left-features {
-                gap: 8px;
-                margin-top: 8px;
-            }
-
-            .feature-item {
-                font-size: 11px;
-            }
-
-            .register-right {
-                padding: 16px;
-                background: white;
-            }
-
-            .register-card {
-                padding: 0;
-            }
-
-            .register-title {
-                font-size: 30px;
-                margin-bottom: 8px;
-            }
-
-            .register-subtitle {
-                font-size: 14px;
-                margin-bottom: 20px;
+                font-size: 36px;
             }
 
             .form-group {
-                margin-bottom: 16px;
-            }
-
-            .form-label {
-                font-size: 14px;
-            }
-
-            .form-control, .form-select {
-                padding: 12px 16px;
-                font-size: 14px;
-                border: 1px solid #e0e0e0;
-            }
-
-            .form-row, .form-row-three {
-                gap: 12px;
-                margin-bottom: 0;
-            }
-
-            .btn {
-                padding: 12px;
-                font-size: 13px;
-            }
-
-            .btn-register {
-                margin-top: 10px;
-                margin-bottom: 15px;
-            }
-
-            .field-section-title {
-                font-size: 13px;
-                margin-top: 15px;
                 margin-bottom: 10px;
             }
 
+            .form-label {
+                font-size: 11px;
+                margin-bottom: 4px;
+            }
+
+            .form-control, .form-select {
+                padding: 8px 10px;
+                font-size: 12px;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
             .divider {
-                margin: 20px 0;
-                font-size: 13px;
+                margin: 12px 0;
+                font-size: 11px;
             }
 
             .login-link {
-                font-size: 13px;
+                font-size: 11px;
             }
 
-            .alert {
-                font-size: 14px;
-                padding: 12px 16px;
+            .register-title {
+                font-size: 18px;
+            }
+
+            .register-subtitle {
+                font-size: 12px;
+            }
+
+            .field-section-title {
+                font-size: 11px;
+                margin-top: 10px;
+                margin-bottom: 8px;
             }
         }
     </style>
@@ -541,33 +494,18 @@
 <body>
 <div class="modern-register-wrapper">
     <div class="register-content">
-        <!-- Left Section - Desktop Only -->
+        <!-- Left Section -->
         <div class="register-left">
             <div class="left-content">
-                <div class="brand-icon">
+                <div class="brand-logo">
                     <i class="bi bi-hospital"></i>
                 </div>
-                <h1 class="left-title">Join MIC Radiology</h1>
-                <p class="left-subtitle">Get access to world-class radiography services and manage your health with ease.</p>
-                
-                <div class="left-features">
-                    <div class="feature-item">
-                        <i class="bi bi-shield-check"></i>
-                        <span>Secure & Encrypted</span>
-                    </div>
-                    <div class="feature-item">
-                        <i class="bi bi-clock-history"></i>
-                        <span>Instant Access to Records</span>
-                    </div>
-                    <div class="feature-item">
-                        <i class="bi bi-person-check"></i>
-                        <span>Professional Support</span>
-                    </div>
-                    <div class="feature-item">
-                        <i class="bi bi-graph-up"></i>
-                        <span>Track Your Health</span>
-                    </div>
-                </div>
+                <h1 class="main-title">
+                    <span class="subtitle-small">RADIOGRAPHY</span>
+                    <span class="title-main">MIC RADIOLOGY</span>
+                </h1>
+                <p class="tagline">Join Us Today</p>
+                <p class="description">Get access to world-class radiography services and expert care.</p>
             </div>
         </div>
 
@@ -582,113 +520,65 @@
                     {% endfor %}
                 {% endif %}
 
-                <h2 class="register-title">Create Your Account</h2>
-                <p class="register-subtitle">Choose your role and fill in your details</p>
+                <h2 class="register-title">Create Account</h2>
+                <p class="register-subtitle">Sign up to get started</p>
 
-                <form method="post" enctype="multipart/form-data" class="register-form">
+                <form method="post" class="register-form">
                     {% csrf_token %}
                     
                     <!-- User Role Selection -->
+                    <div class="form-group">
+                        <label class="form-label">Account Type</label>
+                        <select name="role" class="form-select" required>
+                            <option value="">-- Select Account Type --</option>
+                            <option value="patient" selected>Patient</option>
+                            <option value="receptionist">Receptionist</option>
+                            <option value="doctor">Referral Doctor</option>
+                        </select>
+                    </div>
+
+                    <div class="field-section-title">Personal Information</div>
+                    
                     <div class="form-row">
                         <div class="form-group">
-                            <label for="role" class="form-label">User Role <span>*</span></label>
-                            <select name="role" id="role" class="form-select" required onchange="updateForm()">
-                                <option value="patient" selected>Patient</option>
-                                <option value="doctor">Referral Doctor</option>
-                            </select>
+                            <label class="form-label">First Name</label>
+                            <input type="text" name="first_name" class="form-control" placeholder="First name" required>
                         </div>
                         <div class="form-group">
-                            <label for="email" class="form-label">Email <span>*</span></label>
-                            {{ form.email }}
+                            <label class="form-label">Last Name</label>
+                            <input type="text" name="last_name" class="form-control" placeholder="Last name" required>
                         </div>
                     </div>
 
-                    <!-- Name & Username -->
+                    <div class="form-group">
+                        <label class="form-label">Email</label>
+                        <input type="email" name="email" class="form-control" placeholder="your@email.com" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Phone Number</label>
+                        <input type="tel" name="phone_number" class="form-control" placeholder="+1 (555) 000-0000">
+                    </div>
+
+                    <div class="field-section-title">Account Information</div>
+
+                    <div class="form-group">
+                        <label class="form-label">Username</label>
+                        <input type="text" name="username" class="form-control" placeholder="Choose a username" required>
+                    </div>
+
                     <div class="form-row">
                         <div class="form-group">
-                            <label for="first_name" class="form-label">First Name <span>*</span></label>
-                            {{ form.first_name }}
+                            <label class="form-label">Password</label>
+                            <input type="password" name="password1" class="form-control" placeholder="••••••••" required>
                         </div>
                         <div class="form-group">
-                            <label for="last_name" class="form-label">Last Name <span>*</span></label>
-                            {{ form.last_name }}
+                            <label class="form-label">Confirm</label>
+                            <input type="password" name="password2" class="form-control" placeholder="••••••••" required>
                         </div>
                     </div>
 
-                    <!-- Username & Phone -->
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="username" class="form-label">Username <span>*</span></label>
-                            {{ form.username }}
-                        </div>
-                        <div class="form-group">
-                            <label for="phone_number" class="form-label">Phone Number <span>*</span></label>
-                            {{ form.phone_number }}
-                        </div>
-                    </div>
-
-                    <!-- Patient Specific Fields -->
-                    <div id="patientFields" class="conditional-fields show">
-                        <div class="field-section-title">📋 Patient Information</div>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="date_of_birth" class="form-label">Date of Birth</label>
-                                <input type="date" name="date_of_birth" class="form-control">
-                            </div>
-                            <div class="form-group">
-                                <label for="gender" class="form-label">Gender</label>
-                                <select name="gender" class="form-select">
-                                    <option value="">Select...</option>
-                                    <option value="M">Male</option>
-                                    <option value="F">Female</option>
-                                    <option value="O">Other</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="medical_aid_name" class="form-label">Medical Aid Name</label>
-                                <input type="text" name="medical_aid_name" class="form-control" placeholder="e.g., Medicaid">
-                            </div>
-                            <div class="form-group">
-                                <label for="medical_aid_number" class="form-label">Medical Aid Number</label>
-                                <input type="text" name="medical_aid_number" class="form-control" placeholder="Your member ID">
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Doctor Specific Fields -->
-                    <div id="doctorFields" class="conditional-fields">
-                        <div class="field-section-title">🏥 Professional Information</div>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="license_number" class="form-label">License Number <span>*</span></label>
-                                <input type="text" name="license_number" class="form-control" placeholder="Your medical license">
-                            </div>
-                            <div class="form-group">
-                                <label for="specialization" class="form-label">Specialization</label>
-                                <input type="text" name="specialization" class="form-control" placeholder="e.g., Radiologist">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="hospital_affiliation" class="form-label">Hospital Affiliation</label>
-                            <input type="text" name="hospital_affiliation" class="form-control" placeholder="Your hospital name">
-                        </div>
-                    </div>
-
-                    <!-- Password Fields -->
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="password1" class="form-label">Password <span>*</span></label>
-                            {{ form.password1 }}
-                        </div>
-                        <div class="form-group">
-                            <label for="password2" class="form-label">Confirm Password <span>*</span></label>
-                            {{ form.password2 }}
-                        </div>
-                    </div>
-
-                    <button type="submit" class="btn btn-register">✓ Create Account</button>
+                    <button type="submit" class="btn btn-register">CREATE ACCOUNT</button>
                 </form>
 
                 <div class="divider">
@@ -696,31 +586,11 @@
                 </div>
 
                 <div class="login-link">
-                    Already have an account? <a href="{% url 'login' %}">Sign in</a>
+                    Already have an account? <a href="{% url 'login' %}">Sign in here</a>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
-<script>
-function updateForm() {
-    const role = document.getElementById('role').value;
-    const patientFields = document.getElementById('patientFields');
-    const doctorFields = document.getElementById('doctorFields');
-    
-    if (role === 'patient') {
-        patientFields.classList.add('show');
-        patientFields.classList.remove('hide');
-        doctorFields.classList.remove('show');
-        doctorFields.classList.add('hide');
-    } else if (role === 'doctor') {
-        patientFields.classList.remove('show');
-        patientFields.classList.add('hide');
-        doctorFields.classList.add('show');
-        doctorFields.classList.remove('hide');
-    }
-}
-</script>
 </body>
 </html>

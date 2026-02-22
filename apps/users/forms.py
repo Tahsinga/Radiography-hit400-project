@@ -70,6 +70,21 @@ class DoctorRegistrationForm(CustomUserCreationForm):
         }
 
 
+class ReceptionistRegistrationForm(CustomUserCreationForm):
+    """Specific form for receptionist registration"""
+    
+    class Meta:
+        model = CustomUser
+        fields = ('email', 'username', 'first_name', 'last_name', 'phone_number')
+        widgets = {
+            'email': forms.EmailInput(attrs={'class': 'form-control'}),
+            'username': forms.TextInput(attrs={'class': 'form-control'}),
+            'first_name': forms.TextInput(attrs={'class': 'form-control'}),
+            'last_name': forms.TextInput(attrs={'class': 'form-control'}),
+            'phone_number': forms.TextInput(attrs={'class': 'form-control'}),
+        }
+
+
 class CustomUserChangeForm(UserChangeForm):
     """Form for user profile update"""
     

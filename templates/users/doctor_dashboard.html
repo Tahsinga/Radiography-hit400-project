@@ -1,0 +1,256 @@
+{% extends 'base.html' %}
+
+{% block title %}Doctor Dashboard - MIC Radiology{% endblock %}
+
+{% block content %}
+<style>
+    body {
+        background: #fff;
+        min-height: 100vh;
+    }
+    .doctor-dashboard-wrapper {
+        max-width: 1200px; /* slightly wider to use more horizontal space */
+        margin: 12px auto;
+        padding: 0 12px;
+    }
+    .dashboard-header {
+        background: #ffffff;
+        color: #1a1a1a;
+        border-radius: 6px;
+        padding: 14px 16px; /* reduced padding */
+        box-shadow: 0 1px 4px rgba(2,6,23,0.04);
+        margin-bottom: 12px;
+        text-align: center;
+        border: 1px solid #eef2f7;
+    }
+    .dashboard-header h1 {
+        font-size: 2.5rem;
+        font-weight: 900;
+        margin-bottom: 8px;
+        letter-spacing: 1px;
+        color: #1a1a1a;
+    }
+    .dashboard-header p {
+        font-size: 1.2rem;
+        font-weight: 500;
+        margin-bottom: 0;
+        color: #333333;
+    }
+    .dashboard-cards {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 12px;
+    }
+    .dashboard-card {
+        background: #ffffff;
+        border-radius: 6px;
+        box-shadow: 0 6px 18px rgba(2,6,23,0.04);
+        padding: 14px 14px;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        position: relative;
+        min-height: 100px;
+        border-left: 6px solid #eef2f7;
+        transition: box-shadow 0.18s, transform 0.12s;
+    }
+    .dashboard-card:hover {
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        border-left: 6px solid #d0d0d0;
+    }
+    .dashboard-card h3 {
+        font-size: 1.3rem;
+        font-weight: 800;
+        color: #1a1a1a;
+        margin-bottom: 12px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    .dashboard-card h3 i {
+        color: #333333;
+        font-size: 1.5rem;
+    }
+    .dashboard-card .stat {
+        font-size: 1.7rem;
+        font-weight: 900;
+        color: #0f172a;
+        margin-bottom: 6px;
+    }
+    .dashboard-card .desc {
+        color: #333333;
+        font-size: 1.05rem;
+        margin-bottom: 0;
+    }
+    @media (max-width: 800px) {
+        .dashboard-cards {
+            grid-template-columns: 1fr;
+        }
+    }
+    /* Referrals card styling */
+    .referrals-section {
+        margin-top: 12px;
+        width: calc(100% + 24px);
+        margin-left: -12px; /* make referral cards extend to wrapper edges */
+        box-sizing: border-box;
+    }
+    .referrals-section .pending-list {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        width: 100%;
+    }
+    .referrals-section .pending-item {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        background: #ffffff;
+        padding: 12px 16px; /* tighter padding */
+        border-radius: 8px;
+        box-shadow: 0 8px 18px rgba(2,6,23,0.05);
+        border-left: 6px solid #16a085; /* use green to match other pages */
+        width: 100%;
+        box-sizing: border-box;
+    }
+    .referral-info {
+        flex: 1 1 auto;
+        padding-right: 12px;
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+    }
+    .referral-top {
+        display: flex;
+        gap: 16px;
+        align-items: baseline;
+        flex-wrap: wrap;
+    }
+    .pending-item-patient { font-weight: 700; font-size: 1rem; color: #0f172a; }
+    .pending-item-scan, .pending-item-date { color: #475569; font-size: 0.9rem; }
+    .referral-meta { color: #64748b; font-size: 0.9rem; margin-top: 6px; }
+    .referral-actions {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 8px;
+        min-width: auto;
+        justify-content: flex-end;
+        flex-wrap: wrap;
+    }
+    .action-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 12px;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: 700;
+        border: none;
+        cursor: pointer;
+    }
+    .action-btn.action-btn-primary {
+        background: linear-gradient(135deg,#16a085 0%,#117a65 100%);
+        color: #ffffff;
+        box-shadow: 0 6px 18px rgba(17,122,101,0.12);
+    }
+    .action-btn.action-btn-complete {
+        background: linear-gradient(135deg,#10a37a 0%,#117a65 100%);
+        color: #ffffff;
+        border: none;
+    }
+    .action-btn.action-btn-danger {
+        background: linear-gradient(135deg,#e35d5b 0%,#d32f2f 100%);
+        color: #ffffff;
+        border: none;
+    }
+    .action-btn.action-btn-primary {
+        background: linear-gradient(135deg,#16a085 0%,#117a65 100%);
+        color: #ffffff;
+        padding: 10px 16px;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: 700;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        box-shadow: 0 6px 18px rgba(17,122,101,0.12);
+    }
+    @media (max-width: 800px) {
+        .referrals-section .pending-item { flex-direction: column; align-items: stretch; }
+        .referral-actions { align-items: flex-start; min-width: auto; margin-top: 10px; justify-content: flex-start; }
+        .referral-actions .action-btn { width: auto; }
+    }
+</style>
+<div class="doctor-dashboard-wrapper">
+    <div class="dashboard-header">
+        <h1>Welcome, Dr. {{ user.get_full_name }}</h1>
+        <p>This is your professional dashboard. Here you can view your referrals and completed reports.</p>
+    </div>
+    <div class="dashboard-cards">
+        <div class="dashboard-card">
+            <h3><i class="bi bi-person-lines-fill"></i> Total Referrals</h3>
+            <div class="stat">{{ total_referrals }}</div>
+            <div class="desc">Patients you have referred for radiology scans.</div>
+        </div>
+        <div class="dashboard-card">
+            <h3><i class="bi bi-file-earmark-check"></i> Completed Reports</h3>
+            <div class="stat">{{ completed_referrals.count }}</div>
+            <div class="desc">Reports completed for your referred patients.</div>
+        </div>
+    </div>
+    </div>
+
+    <div class="referrals-section" style="margin-top:28px;">
+        <div class="action-section" style="padding:20px;">
+            {% if referrals %}
+            <div class="pending-list">
+                {% for appt in referrals %}
+                <div class="pending-item">
+                    <div class="referral-info">
+                        <div class="referral-top">
+                            <div class="pending-item-patient">{% if appt.first_name %}{{ appt.first_name }} {{ appt.last_name }}{% else %}{{ appt.patient.get_full_name }}{% endif %}</div>
+                            <div class="pending-item-scan">Scan: {% if appt.scan_type %}{{ appt.scan_type.name }}{% else %}N/A{% endif %}</div>
+                            <div class="pending-item-date">{{ appt.appointment_date }} at {{ appt.appointment_time }}</div>
+                        </div>
+                        <div class="referral-meta">
+                            <strong>Contact:</strong> {% if appt.contact_phone %}{{ appt.contact_phone }}{% else %}{{ appt.patient.phone_number }}{% endif %} • {% if appt.contact_email %}{{ appt.contact_email }}{% else %}{{ appt.patient.email }}{% endif %}
+                            <br>
+                            <strong>DOB:</strong> {% if appt.date_of_birth %}{{ appt.date_of_birth }}{% else %}{{ appt.patient.date_of_birth }}{% endif %} • <strong>Allergies:</strong> {{ appt.allergies|default:'None' }}
+                        </div>
+                        {% if appt.clinical_notes %}
+                        <div class="referral-meta"><strong>Clinical Notes:</strong> {{ appt.clinical_notes }}</div>
+                        {% endif %}
+                        {% if appt.referral_document %}
+                        <div style="margin-top:6px;"><a href="{{ appt.referral_document.url }}" target="_blank">View referral document</a></div>
+                        {% endif %}
+                    </div>
+                    <div class="referral-actions">
+                        <a href="{% url 'appointment_detail' appt.id %}" class="action-btn action-btn-primary">View</a>
+                        {% if appt.status != 'completed' %}
+                        <form method="post" action="{% url 'mark_appointment_completed' appt.id %}" style="margin:0;">
+                            {% csrf_token %}
+                            <button type="submit" class="action-btn action-btn-complete">Mark Completed</button>
+                        </form>
+                        {% else %}
+                        <div style="color:#10a37a; font-weight:700;">Completed</div>
+                        {% endif %}
+                        {% if appt.status != 'cancelled' and appt.can_be_cancelled %}
+                        <form method="post" action="{% url 'cancel_appointment' appt.id %}" style="margin:0;">
+                            {% csrf_token %}
+                            <button type="submit" class="action-btn action-btn-danger" onclick="return confirm('Are you sure you want to cancel this appointment?')">Cancel</button>
+                        </form>
+                        {% endif %}
+                        <div style="font-size:0.85rem;"><strong>Status:</strong>
+                            <span class="status-badge {% if appt.status == 'cancelled' %}status-cancelled{% elif appt.status == 'completed' %}status-completed{% elif appt.status == 'confirmed' %}status-confirmed{% else %}status-pending{% endif %}">{{ appt.status|capfirst }}</span>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% else %}
+            <p style="color:#94a3b8;">You have no referrals at this time.</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -3,8 +3,22 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.views.decorators.http import require_http_methods
-from apps.users.forms import PatientRegistrationForm, DoctorRegistrationForm, CustomUserChangeForm
+from apps.users.forms import PatientRegistrationForm, DoctorRegistrationForm, ReceptionistRegistrationForm, CustomUserChangeForm
 from apps.users.models import CustomUser
+
+@login_required(login_url='login')
+@require_http_methods(["GET", "POST"])
+def edit_profile(request):
+    """Edit user profile view"""
+    if request.method == 'POST':
+        form = CustomUserChangeForm(request.POST, request.FILES, instance=request.user)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Profile updated successfully!')
+            return redirect('profile')
+    else:
+        form = CustomUserChangeForm(instance=request.user)
+    return render(request, 'users/edit_profile.html', {'form': form})
 
 def home(request):
     """Home page - redirects to login or dashboard"""
@@ -25,18 +39,22 @@ def register(request):
     """User registration view with role selection"""
     if request.method == 'POST':
         user_role = request.POST.get('role', 'patient')
-        
-        if user_role == 'patient':
-            form = PatientRegistrationForm(request.POST, request.FILES)
-        elif user_role == 'doctor':
+        if user_role == 'doctor':
             form = DoctorRegistrationForm(request.POST, request.FILES)
+        elif user_role == 'receptionist':
+            form = ReceptionistRegistrationForm(request.POST, request.FILES)
         else:
-            messages.error(request, 'Invalid user role selected')
-            return redirect('register')
-        
+            form = PatientRegistrationForm(request.POST, request.FILES)
+
         if form.is_valid():
-            user = form.save()
-            user.role = user_role
+            user = form.save(commit=False)
+            # Force the correct role regardless of form data
+            if user_role == 'doctor':
+                user.role = 'doctor'
+            elif user_role == 'receptionist':
+                user.role = 'receptionist'
+            else:
+                user.role = 'patient'
             user.save()
             messages.success(request, 'Registration successful! You can now login.')
             return redirect('login')
@@ -46,7 +64,6 @@ def register(request):
                     messages.error(request, f"{field}: {error}")
     else:
         form = PatientRegistrationForm()
-    
     return render(request, 'users/register.html', {'form': form})
 
 
@@ -86,6 +103,8 @@ def dashboard(request):
         return redirect('patient_dashboard')
     elif request.user.is_staff_user():
         return redirect('staff_dashboard')
+    elif request.user.is_receptionist():
+        return redirect('receptionist_dashboard')
     elif request.user.is_doctor():
         return redirect('doctor_dashboard')
     return redirect('login')
@@ -134,6 +153,28 @@ def staff_dashboard(request):
 
 
 @login_required(login_url='login')
+def receptionist_dashboard(request):
+    """Receptionist dashboard"""
+    if not request.user.is_receptionist():
+        messages.error(request, 'Access denied. Receptionist access required.')
+        return redirect('dashboard')
+    
+    from apps.appointments.models import Appointment
+    
+    pending_appointments = Appointment.objects.filter(status='pending')
+    confirmed_appointments = Appointment.objects.filter(status='confirmed')
+    total_handled = Appointment.objects.filter(receptionist=request.user)
+    
+    context = {
+        'pending_count': pending_appointments.count(),
+        'confirmed_count': confirmed_appointments.count(),
+        'total_handled': total_handled.count(),
+        'pending_appointments': pending_appointments[:10],  # Show last 10
+    }
+    return render(request, 'users/receptionist_dashboard.html', context)
+
+
+@login_required(login_url='login')
 def doctor_dashboard(request):
     """Referral doctor dashboard"""
     if not request.user.is_doctor():
@@ -141,12 +182,14 @@ def doctor_dashboard(request):
         return redirect('dashboard')
     
     from apps.appointments.models import Appointment
-    referrals = Appointment.objects.filter(referring_doctor=request.user)
-    completed_referrals = referrals.filter(status='completed')
-    
+    # Show active referrals (exclude completed and cancelled) on dashboard
+    referrals = Appointment.objects.filter(referring_doctor=request.user).exclude(status__in=['completed', 'cancelled'])
+    completed_referrals = Appointment.objects.filter(referring_doctor=request.user, status='completed')
+
     context = {
         'total_referrals': referrals.count(),
         'completed_referrals': completed_referrals,
+        'referrals': referrals,  # non-completed referrals for listing
     }
     return render(request, 'users/doctor_dashboard.html', context)
 

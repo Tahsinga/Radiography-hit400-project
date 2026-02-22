@@ -12,9 +12,9 @@
             <div class="d-flex justify-content-between align-items-center mb-4">
                 <h2>Analytics Dashboard</h2>
                 <div class="btn-group" role="group">
-                    <a href="?days=7" class="btn btn-sm btn-outline-primary">7 Days</a>
-                    <a href="?days=30" class="btn btn-sm btn-outline-primary active">30 Days</a>
-                    <a href="?days=90" class="btn btn-sm btn-outline-primary">90 Days</a>
+                    <a href="?days=7" class="btn btn-sm" style="background: #f0f0f0; color: #1a1a1a; border: 1px solid #e0e0e0;">7 Days</a>
+                    <a href="?days=30" class="btn btn-sm" style="background: #f0f0f0; color: #1a1a1a; border: 1px solid #e0e0e0; font-weight: bold;">30 Days</a>
+                    <a href="?days=90" class="btn btn-sm" style="background: #f0f0f0; color: #1a1a1a; border: 1px solid #e0e0e0;">90 Days</a>
                 </div>
             </div>
 
@@ -25,7 +25,7 @@
                 <div class="card-body">
                     <h6 class="card-title">Total Appointments</h6>
                     <h2 class="mb-2">{{ total_appointments }}</h2>
-                    <small class="text-white-50">Last {{ time_range_days }} days</small>
+                    <small>Last {{ time_range_days }} days</small>
                 </div>
             </div>
         </div>
@@ -34,7 +34,7 @@
                 <div class="card-body">
                     <h6 class="card-title">Completed</h6>
                     <h2 class="mb-2">{{ completed_appointments }}</h2>
-                    <small class="text-white-50">{{ completion_rate }}% completion rate</small>
+                    <small>{{ completion_rate }}% completion rate</small>
                 </div>
             </div>
         </div>
@@ -43,7 +43,7 @@
                 <div class="card-body">
                     <h6 class="card-title">Missed Appointments</h6>
                     <h2 class="mb-2">{{ missed_appointments }}</h2>
-                    <small class="text-white-50">{{ missed_rate }}% no-show rate</small>
+                    <small>{{ missed_rate }}% no-show rate</small>
                 </div>
             </div>
         </div>
@@ -52,7 +52,7 @@
                 <div class="card-body">
                     <h6 class="card-title">Avg Satisfaction</h6>
                     <h2 class="mb-2">{{ avg_satisfaction }}/5.0</h2>
-                    <small class="text-white-50">Based on feedback</small>
+                    <small>Based on feedback</small>
                 </div>
             </div>
         </div>
@@ -115,16 +115,16 @@
 
             <div class="row mt-4">
                 <div class="col-md-12">
-                    <button class="btn btn-primary btn-sm" onclick="loadContentRight('{% url 'revenue_report' %}')">View Revenue Report</button>
-                    <button class="btn btn-primary btn-sm" onclick="loadContentRight('{% url 'feedback_analysis' %}')">View Feedback Analysis</button>
+                    <button class="btn btn-sm" style="background: #f0f0f0; color: #1a1a1a; border: 1px solid #e0e0e0;" onclick="loadContentRight('{% url 'revenue_report' %}')">View Revenue Report</button>
+                    <button class="btn btn-sm" style="background: #f0f0f0; color: #1a1a1a; border: 1px solid #e0e0e0;" onclick="loadContentRight('{% url 'feedback_analysis' %}')">View Feedback Analysis</button>
                 </div>
             </div>
         </div>
 
         <!-- Right Column: Content Area -->
-        <div class="col-md-6" style="max-height: 90vh; overflow-y: auto; border-left: 1px solid #ddd; padding-left: 20px;">
+        <div class="col-md-6" style="max-height: 90vh; overflow-y: auto; border-left: 1px solid #e0e0e0; padding-left: 20px;">
             <div id="content-area">
-                <div class="text-center text-muted mt-5">
+                <div class="text-center" style="color: #666666; margin-top: 20px;">
                     <p>Click on a button to view detailed reports</p>
                 </div>
             </div>
@@ -145,11 +145,11 @@ new Chart(ctx, {
         datasets: [{
             data: scanData.map(d => d.count),
             backgroundColor: [
-                '#667eea',
-                '#764ba2',
-                '#f093fb',
-                '#4facfe',
-                '#00f2fe'
+                '#cccccc',
+                '#999999',
+                '#666666',
+                '#333333',
+                '#dddddd'
             ]
         }]
     },

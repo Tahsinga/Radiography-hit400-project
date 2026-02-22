@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block title %}Completed Referrals - MIC Radiology{% endblock %}
+
+{% block content %}
+<style>
+    .completed-wrapper { max-width:1200px; margin:16px auto; padding:0 12px; }
+    .completed-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:12px; }
+    .completed-header h2 { margin:0; font-size:1.4rem; }
+    .completed-list { display:flex; flex-direction:column; gap:12px; }
+    .completed-card { background:#fff; border-radius:8px; padding:12px 14px; box-shadow:0 8px 18px rgba(2,6,23,0.05); border-left:6px solid #10a37a; display:flex; justify-content:space-between; align-items:center; }
+    .completed-info { display:flex; gap:18px; align-items:center; flex:1; }
+    .completed-info .name { font-weight:700; color:#0f172a; }
+    .completed-meta { color:#64748b; font-size:0.95rem; }
+    .completed-actions { min-width:140px; display:flex; gap:8px; align-items:center; }
+    .btn-ghost { background:transparent; border:1px solid #e6eef0; padding:8px 12px; border-radius:8px; }
+    @media (max-width:800px) { .completed-card { flex-direction:column; align-items:flex-start; } .completed-actions{ width:100%; justify-content:flex-start; margin-top:8px; } }
+</style>
+
+<div class="completed-wrapper" style="margin-top:30px;">
+    <div class="completed-header">
+        <h2>Completed Referrals</h2>
+        <div class="small-meta">Showing <strong>{{ completed_appointments.count }}</strong> completed</div>
+    </div>
+
+    {% if completed_appointments %}
+    <div class="completed-list">
+        {% for appt in completed_appointments %}
+        <div class="completed-card">
+                <div class="completed-info">
+                <div>
+                    <div class="name">{% if appt.first_name %}{{ appt.first_name }} {{ appt.last_name }}{% else %}{{ appt.patient.get_full_name }}{% endif %}</div>
+                    <div class="completed-meta">{{ appt.appointment_date }} • {% if appt.scan_type %}{{ appt.scan_type.name }}{% else %}N/A{% endif %}</div>
+                </div>
+                <div class="completed-meta">Contact: {% if appt.contact_phone %}{{ appt.contact_phone }}{% else %}{{ appt.patient.phone_number|default:'-' }}{% endif %} • {{ appt.contact_email|default:appt.patient.email|default:'-' }}</div>
+            </div>
+            <div class="completed-actions">
+                <a href="{% url 'appointment_detail' appt.id %}" class="btn-ghost">View</a>
+                {% if appt.report %}
+                <a href="{% url 'view_report' appt.report.id %}" class="btn-ghost">Report</a>
+                {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <p style="color:#64748b;">You have no completed referrals yet.</p>
+    {% endif %}
+</div>
+
+{% endblock %}

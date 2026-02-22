@@ -4,93 +4,80 @@
 
 {% block content %}
 <style>
-    :root {
-        --primary-color: #1e88e5;
-        --primary-dark: #1565c0;
-    }
-
     body {
-        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        background: #fff;
         min-height: 100vh;
     }
 
     .wrapper {
-        max-width: 1000px;
-        margin: 30px auto;
+        max-width: 1100px;
+        margin: 40px auto;
         padding: 0 15px;
     }
 
     .page-header {
-        margin-bottom: 30px;
-        animation: slideDown 0.6s ease-out;
-    }
-
-    @keyframes slideDown {
-        from {
-            opacity: 0;
-            transform: translateY(-20px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-
-    @keyframes slideUp {
-        from {
-            opacity: 0;
-            transform: translateY(20px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
+        background: #ffffff;
+        color: #1a1a1a;
+        border-radius: 5px;
+        padding: 36px 32px 28px 32px;
+        box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+        margin-bottom: 32px;
+        text-align: center;
+        border: 1px solid #e0e0e0;
     }
 
     .page-title {
-        font-size: 32px;
-        font-weight: 800;
-        color: #1a1a1a;
+        font-size: 2.5rem;
+        font-weight: 900;
         margin-bottom: 8px;
+        letter-spacing: 1px;
+        color: #1a1a1a;
     }
 
     .page-subtitle {
-        font-size: 15px;
-        color: #666;
+        font-size: 1.2rem;
+        font-weight: 500;
+        margin-bottom: 0;
+        color: #333333;
     }
 
     .content-wrapper {
         display: grid;
         grid-template-columns: 2fr 1fr;
         gap: 25px;
-        animation: slideUp 0.6s ease-out;
     }
 
     .modern-card {
         background: white;
-        border-radius: 16px;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
-        border: 1px solid rgba(30, 136, 229, 0.1);
+        border-radius: 5px;
+        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+        border: 1px solid #e0e0e0;
         overflow: hidden;
     }
 
     .card-header-modern {
-        background: linear-gradient(135deg, #1e88e5 0%, #1565c0 100%);
-        color: white;
-        padding: 20px 25px;
+        background: #ffffff;
+        border-bottom: 2px solid #16a085;
+        padding: 24px 28px;
         display: flex;
         align-items: center;
         gap: 12px;
     }
 
     .card-header-modern h4 {
-        font-size: 18px;
-        font-weight: 700;
+        font-size: 1.1rem;
+        font-weight: 800;
         margin: 0;
+        color: #1a1a1a;
+    }
+
+    .card-header-modern i {
+        color: #16a085;
+        font-size: 1.3rem;
     }
 
     .card-body-modern {
-        padding: 30px;
+        padding: 28px;
     }
 
     .form-group {
@@ -106,7 +93,7 @@
     }
 
     .form-group label .required {
-        color: #f44336;
+        color: #16a085;
     }
 
     .form-group input,
@@ -115,7 +102,7 @@
         width: 100%;
         padding: 12px 16px;
         border: 1px solid #e0e0e0;
-        border-radius: 10px;
+        border-radius: 5px;
         font-size: 14px;
         font-family: inherit;
         transition: all 0.3s ease;
@@ -125,8 +112,8 @@
     .form-group select:focus,
     .form-group textarea:focus {
         outline: none;
-        border-color: #1e88e5;
-        box-shadow: 0 0 0 3px rgba(30, 136, 229, 0.1);
+        border-color: #16a085;
+        box-shadow: 0 0 0 3px rgba(22, 160, 133, 0.1);
     }
 
     .form-group textarea {
@@ -148,9 +135,10 @@
     }
 
     .payment-summary {
-        background: linear-gradient(135deg, rgba(30, 136, 229, 0.08) 0%, rgba(21, 101, 192, 0.08) 100%);
-        border: 1px solid rgba(30, 136, 229, 0.2);
-        border-radius: 12px;
+        background: #f9f9f9;
+        border: 1px solid #e0e0e0;
+        border-left: 4px solid #16a085;
+        border-radius: 5px;
         padding: 20px;
         margin-bottom: 20px;
     }
@@ -185,7 +173,7 @@
     }
 
     .payment-value.primary {
-        color: #1e88e5;
+        color: #16a085;
         font-size: 20px;
     }
 
@@ -195,7 +183,7 @@
         gap: 10px;
         padding: 12px;
         background: #f9f9f9;
-        border-radius: 10px;
+        border-radius: 5px;
         margin-bottom: 25px;
     }
 
@@ -218,11 +206,11 @@
     }
 
     .btn-modern {
-        padding: 14px 24px;
+        padding: 12px 24px;
         border: none;
-        border-radius: 10px;
+        border-radius: 5px;
         font-size: 14px;
-        font-weight: 700;
+        font-weight: 600;
         cursor: pointer;
         text-decoration: none;
         transition: all 0.3s ease;
@@ -235,33 +223,36 @@
     }
 
     .btn-primary-modern {
-        background: linear-gradient(135deg, #1e88e5 0%, #1565c0 100%);
+        background: linear-gradient(135deg, #16a085 0%, #117a65 100%);
         color: white;
-        box-shadow: 0 4px 15px rgba(30, 136, 229, 0.3);
     }
 
     .btn-primary-modern:hover {
         transform: translateY(-2px);
-        box-shadow: 0 8px 25px rgba(30, 136, 229, 0.4);
+        box-shadow: 0 4px 12px rgba(22, 160, 133, 0.3);
         color: white;
     }
 
     .btn-secondary-modern {
-        background: #f0f0f0;
-        color: #1a1a1a;
-        border: 1px solid #e0e0e0;
+        background: linear-gradient(135deg, #16a085 0%, #117a65 100%);
+        color: #ffffff;
+        border: none;
+        box-shadow: 0 4px 12px rgba(22,160,133,0.18);
     }
 
     .btn-secondary-modern:hover {
-        background: #e0e0e0;
-        color: #1a1a1a;
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(17,122,101,0.25);
+        color: #ffffff;
     }
 
     .info-card {
         background: white;
-        border-radius: 12px;
+        border-radius: 5px;
         padding: 0;
         overflow: hidden;
+        box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+        border: 1px solid #e0e0e0;
     }
 
     .info-section {
@@ -276,13 +267,17 @@
     .info-title {
         font-size: 13px;
         font-weight: 700;
-        color: #1e88e5;
+        color: #1a1a1a;
         text-transform: uppercase;
         letter-spacing: 0.5px;
         margin-bottom: 12px;
         display: flex;
         align-items: center;
         gap: 8px;
+    }
+
+    .info-title i {
+        color: #16a085;
     }
 
     .info-content {
@@ -307,7 +302,7 @@
         content: "✓";
         position: absolute;
         left: 0;
-        color: #4caf50;
+        color: #16a085;
         font-weight: 700;
     }
 
@@ -317,7 +312,7 @@
         }
 
         .page-title {
-            font-size: 24px;
+            font-size: 1.8rem;
         }
 
         .form-row {
@@ -341,7 +336,7 @@
 <div class="wrapper">
     <!-- Page Header -->
     <div class="page-header">
-        <h1 class="page-title">Book an Appointment</h1>
+        <h1 class="page-title">BOOK AN APPOINTMENT</h1>
         <p class="page-subtitle">Schedule your radiology scan with us</p>
     </div>
 
@@ -350,32 +345,91 @@
         <!-- Form Card -->
         <div class="modern-card">
             <div class="card-header-modern">
-                <i class="bi bi-calendar-plus" style="font-size: 20px;"></i>
+                <i class="bi bi-calendar-plus"></i>
                 <h4>Appointment Details</h4>
             </div>
             <div class="card-body-modern">
                 <form method="post" enctype="multipart/form-data">
                     {% csrf_token %}
                     
+                        <!-- Patient Contact / Snapshot Fields -->
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="{{ form.first_name.id_for_label }}"><i class="bi bi-person"></i> First name</label>
+                                {{ form.first_name }}
+                            </div>
+                            <div class="form-group">
+                                <label for="{{ form.last_name.id_for_label }}"><i class="bi bi-person"></i> Last name</label>
+                                {{ form.last_name }}
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="{{ form.contact_phone.id_for_label }}"><i class="bi bi-telephone"></i> Phone number</label>
+                                {{ form.contact_phone }}
+                            </div>
+                            <div class="form-group">
+                                <label for="{{ form.contact_email.id_for_label }}"><i class="bi bi-envelope"></i> Email</label>
+                                {{ form.contact_email }}
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="{{ form.date_of_birth.id_for_label }}"><i class="bi bi-calendar-event"></i> Date of birth</label>
+                            {{ form.date_of_birth }}
+                        </div>
+
+                        <div class="form-group">
+                            <label for="{{ form.allergies.id_for_label }}"><i class="bi bi-exclamation-triangle"></i> Allergies</label>
+                            {{ form.allergies }}
+                            <small>List any allergies the patient reports</small>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="{{ form.other_conditions.id_for_label }}"><i class="bi bi-activity"></i> Other conditions</label>
+                            {{ form.other_conditions }}
+                            <small>Other diseases or medical conditions</small>
+                        </div>
+
                     <!-- Scan Type -->
                     <div class="form-group">
                         <label for="{{ form.scan_type.id_for_label }}">
-                            Scan Type <span class="required">*</span>
+                            <i class="bi bi-heart-pulse"></i> Scan Type <span style="color: #999; font-size: 12px;">(Optional)</span>
                         </label>
                         {{ form.scan_type }}
+                        <small>Select a scan type if you're coming for a specific radiological scan</small>
+                    </div>
+
+                    <!-- Appointment Description -->
+                    <div class="form-group">
+                        <label for="{{ form.appointment_description.id_for_label }}">
+                            <i class="bi bi-file-text"></i> Appointment Reason <span style="color: #999; font-size: 12px;">(Optional)</span>
+                        </label>
+                        {{ form.appointment_description }}
+                        <small>Brief description of your appointment (e.g., Follow-up check, Routine consultation)</small>
+                    </div>
+
+                    <!-- Referring Doctor -->
+                    <div class="form-group">
+                        <label for="{{ form.referring_doctor.id_for_label }}">
+                            <i class="bi bi-person-badge"></i> Select Doctor <span style="color: #999; font-size: 12px;">(Optional)</span>
+                        </label>
+                        {{ form.referring_doctor }}
+                        <small>Select the doctor who referred you (if applicable)</small>
                     </div>
 
                     <!-- Date and Time -->
                     <div class="form-row">
                         <div class="form-group">
                             <label for="{{ form.appointment_date.id_for_label }}">
-                                Date <span class="required">*</span>
+                                <i class="bi bi-calendar"></i> Date <span class="required">*</span>
                             </label>
                             {{ form.appointment_date }}
                         </div>
                         <div class="form-group">
                             <label for="{{ form.appointment_time.id_for_label }}">
-                                Time <span class="required">*</span>
+                                <i class="bi bi-clock"></i> Time <span class="required">*</span>
                             </label>
                             {{ form.appointment_time }}
                         </div>
@@ -384,39 +438,18 @@
                     <!-- Referral Document -->
                     <div class="form-group">
                         <label for="{{ form.referral_document.id_for_label }}">
-                            <i class="bi bi-file-earmark-pdf"></i> Referral Document
+                            <i class="bi bi-file-earmark-pdf"></i> Referral Document <span style="color: #999; font-size: 12px;">(Optional)</span>
                         </label>
                         {{ form.referral_document }}
-                        <small>Upload your referral letter (PDF, DOC, JPG, PNG - Optional)</small>
+                        <small>Upload your referral letter (PDF, DOC, JPG, PNG)</small>
                     </div>
 
                     <!-- Clinical Notes -->
                     <div class="form-group">
                         <label for="{{ form.clinical_notes.id_for_label }}">
-                            <i class="bi bi-chat-dots"></i> Clinical Notes
+                            <i class="bi bi-chat-dots"></i> Clinical Notes <span style="color: #999; font-size: 12px;">(Optional)</span>
                         </label>
                         {{ form.clinical_notes }}
-                        <small>Any relevant medical history or concerns</small>
-                    </div>
-
-                    <!-- Payment Summary -->
-                    <div class="payment-summary">
-                        <div class="payment-row">
-                            <div class="payment-item">
-                                <span class="payment-label">Service Charge</span>
-                                <span class="payment-value" id="serviceCharge">-</span>
-                            </div>
-                            <div class="payment-item">
-                                <span class="payment-label">Medical Aid Coverage</span>
-                                <span class="payment-value" id="medicalAidCoverage">-</span>
-                            </div>
-                        </div>
-                        <div style="border-top: 1px solid rgba(30, 136, 229, 0.2); padding-top: 15px;">
-                            <div class="payment-item">
-                                <span class="payment-label">Your Co-Payment</span>
-                                <span class="payment-value primary" id="coPayment">-</span>
-                            </div>
-                        </div>
                     </div>
 
                     <!-- Terms Checkbox -->
@@ -442,6 +475,23 @@
 
         <!-- Sidebar Info -->
         <div>
+            <!-- Appointment Options Card -->
+            <div class="modern-card info-card" style="margin-bottom: 20px;">
+                <div class="info-section">
+                    <div class="info-title">
+                        <i class="bi bi-lightbulb"></i> Appointment Options
+                    </div>
+                    <div class="info-content">
+                        <strong>Choose your appointment type:</strong>
+                        <ul class="info-list" style="margin-top: 10px;">
+                            <li>Select a scan type if you need a specific radiological scan</li>
+                            <li>Or provide a brief description of your visit if you're not sure</li>
+                            <li>Select a referring doctor if applicable</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
             <!-- Before Appointment Card -->
             <div class="modern-card info-card" style="margin-bottom: 20px;">
                 <div class="info-section">
@@ -485,27 +535,5 @@
     </div>
 </div>
 
-<script>
-    // Payment summary calculation
-    function updatePaymentSummary() {
-        const serviceCharge = Math.random() * 1000;
-        const coverage = serviceCharge * 0.8;
-        const coPayment = serviceCharge - coverage;
 
-        document.getElementById('serviceCharge').textContent = 'R' + serviceCharge.toFixed(2);
-        document.getElementById('medicalAidCoverage').textContent = 'R' + coverage.toFixed(2);
-        document.getElementById('coPayment').textContent = 'R' + coPayment.toFixed(2);
-    }
-
-    // Initialize on page load
-    document.addEventListener('DOMContentLoaded', function() {
-        updatePaymentSummary();
-    });
-
-    // Update when scan type changes
-    const scanTypeSelect = document.querySelector('select[name="scan_type"]');
-    if (scanTypeSelect) {
-        scanTypeSelect.addEventListener('change', updatePaymentSummary);
-    }
-</script>
 {% endblock %}

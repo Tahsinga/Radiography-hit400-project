@@ -13,10 +13,10 @@
     --accent-blue: #3b82f6;
     
     /* Neutral Colors */
-    --bg-light: #f8fafc;
+    --bg-light: #ffffff;
     --bg-white: #ffffff;
-    --text-dark: #1e293b;
-    --text-gray: #64748b;
+    --text-dark: #1a1a1a;
+    --text-gray: #333333;
     --text-light: #94a3b8;
     --border-color: #e2e8f0;
     --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
@@ -24,7 +24,7 @@
     --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
     
     /* Font Stack */
-    --font-primary: 'Segoe UI', 'Roboto', 'Helvetica Neue', sans-serif;
+    --font-primary: 'Google Sans', sans-serif;
     --font-mono: 'Monaco', 'Courier New', monospace;
 }
 
@@ -222,6 +222,7 @@ a:hover {
     flex-direction: column;
     justify-content: space-between;
     min-height: 150px;
+    background: #344648;
 }
 
 .stat-card:hover {
@@ -297,6 +298,102 @@ a:hover {
 .btn-secondary:hover {
     background-color: var(--primary-teal);
     color: white;
+}
+
+/* Sidebar button color override */
+.sidebar .nav-link {
+    background-color: #344648;
+    color: #ffffff !important;
+    padding: 0.75rem 1.5rem;
+    border-left: 3px solid transparent;
+    border-radius: 0;
+    transition: all 0.3s ease;
+}
+.sidebar .nav-link i {
+    color: #ffffff;
+}
+.sidebar .nav-link:hover {
+    background-color: #2b3a3a;
+    color: #ffffff !important;
+    border-left-color: #ffffff;
+    padding-left: 1.75rem;
+}
+.sidebar .nav-link.active {
+    background-color: #2b3a3a;
+    color: #ffffff !important;
+    border-left-color: #ffffff;
+    font-weight: 600;
+}
+
+/* Additional sidebar button targets (logout/profile/notifications) */
+.sidebar .btn,
+.sidebar .btn-icon,
+.sidebar .sidebar-controls a,
+.sidebar .nav-link.btn {
+    background-color: #344648;
+    color: #ffffff !important;
+    border: none;
+}
+.sidebar .btn i,
+.sidebar .btn-icon i,
+.sidebar .sidebar-controls a i {
+    color: #ffffff !important;
+}
+.sidebar .btn:hover,
+.sidebar .btn-icon:hover,
+.sidebar .sidebar-controls a:hover {
+    background-color: #2b3a3a;
+    color: #ffffff !important;
+}
+
+/* Profile card in sidebar (name / email / edit links) */
+.sidebar .profile-card {
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
+    padding: 12px 14px;
+    border-radius: 8px;
+    background-color: #ffffff;
+    color: #1a1a1a;
+    border: 1px solid #e0e0e0;
+}
+.sidebar .profile-card img {
+    width: 46px;
+    height: 46px;
+    border-radius: 8px;
+    object-fit: cover;
+    border: 2px solid #e0e0e0;
+}
+.sidebar .profile-card .name {
+    font-weight: 600;
+    font-size: 14px;
+    color: #1a1a1a !important;
+}
+.sidebar .profile-card .role {
+    font-size: 14px;
+    color: #333333 !important;
+}
+.sidebar .sidebar-controls a {
+    background-color: #344648;
+    color: #ffffff !important;
+    border-radius: 8px;
+    padding: 8px 10px;
+}
+.sidebar .sidebar-controls a .label {
+    color: #ffffff !important;
+}
+
+/* Force all sidebar link/button text to white (higher specificity) */
+.sidebar .nav-link,
+.sidebar .nav-link > .label,
+.sidebar .nav-link > span,
+.sidebar .nav-link .badge,
+.sidebar .sidebar-controls a,
+.sidebar .sidebar-controls a .label,
+.sidebar .sidebar-controls a span,
+.sidebar .nav-link .bi,
+.sidebar .sidebar-controls a .bi {
+    color: #ffffff !important;
 }
 
 .btn-lg {
@@ -396,6 +493,74 @@ a:hover {
 .alert-warning {
     background-color: rgba(245, 158, 11, 0.1);
     color: #d97706;
+}
+
+/* ============================================
+   DASHBOARD THEME (light-mode variant inspired by attached mock)
+   Applied when a page includes the `dashboard-theme` wrapper
+   ============================================ */
+.dashboard-theme .sidebar {
+    background-color: #f1f5f9; /* light slate */
+    border-right: 1px solid var(--border-color);
+    padding-top: 2.5rem;
+}
+
+.dashboard-theme .sidebar .nav-link {
+    color: var(--text-dark);
+    background: transparent;
+}
+
+.dashboard-theme .sidebar .nav-link i {
+    color: var(--primary-teal);
+}
+
+.dashboard-theme .sidebar .nav-link.active,
+.dashboard-theme .sidebar .nav-link:hover {
+    background-color: rgba(22,160,133,0.08);
+    color: var(--primary-dark-teal);
+    border-left-color: var(--primary-teal);
+}
+
+.dashboard-theme .dashboard-container {
+    padding: 1.25rem 1.5rem;
+}
+
+.dashboard-theme .dashboard-header h1 {
+    font-size: 1.5rem;
+    margin-bottom: 0.25rem;
+}
+
+.dashboard-theme .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    margin-bottom: 1.25rem;
+}
+
+.dashboard-theme .stat-card {
+    min-height: 110px;
+    padding: 1rem;
+    color: white;
+}
+
+.dashboard-theme .stat-card .value {
+    font-size: 1.6rem;
+}
+
+.dashboard-theme .card {
+    background-color: var(--bg-white);
+}
+
+.dashboard-theme #content-area {
+    padding: 0.5rem 0;
+}
+
+@media (max-width: 992px) {
+    .dashboard-theme .stats-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 576px) {
+    .dashboard-theme .stats-grid { grid-template-columns: 1fr; }
 }
 
 .alert-info {
@@ -548,3 +713,73 @@ a:hover {
 
 .gap-2 { gap: 1rem; }
 .gap-3 { gap: 1.5rem; }
+
+/* Override: prevent buttons from turning white (background/text) on hover across the site */
+button:hover,
+.btn:hover,
+input[type=button]:hover,
+input[type=submit]:hover,
+input[type=reset]:hover,
+.btn-default:hover,
+.btn-secondary:hover,
+.sidebar .btn:hover,
+.sidebar .btn-icon:hover,
+.sidebar .sidebar-controls a:hover,
+.sidebar .nav-link:hover {
+    background-color: transparent !important;
+    background-image: none !important;
+    color: inherit !important;
+    box-shadow: none !important;
+}
+
+/* Force sidebar nav-links to keep their original background and white text
+   on hover/focus/active — no visible hover change. */
+nav.sidebar .sidebar-sticky ul.nav.flex-column li.nav-item > a.nav-link,
+nav.sidebar .sidebar-sticky ul.nav.flex-column li.nav-item > a.nav-link:hover,
+nav.sidebar .sidebar-sticky ul.nav.flex-column li.nav-item > a.nav-link:focus,
+nav.sidebar .sidebar-sticky ul.nav.flex-column li.nav-item > a.nav-link:active,
+.dashboard-theme nav.sidebar .sidebar-sticky ul.nav.flex-column li.nav-item > a.nav-link,
+.dashboard-theme nav.sidebar .sidebar-sticky ul.nav.flex-column li.nav-item > a.nav-link:hover,
+.dashboard-theme nav.sidebar .sidebar-sticky ul.nav.flex-column li.nav-item > a.nav-link:focus,
+.dashboard-theme nav.sidebar .sidebar-sticky ul.nav.flex-column li.nav-item > a.nav-link:active {
+    background-color: #344648 !important;
+    color: #ffffff !important;
+    border-left-color: transparent !important;
+}
+
+/* Ensure icons inside links stay white too */
+nav.sidebar .sidebar-sticky ul.nav.flex-column li.nav-item > a.nav-link i,
+.dashboard-theme nav.sidebar .sidebar-sticky ul.nav.flex-column li.nav-item > a.nav-link i {
+    color: #ffffff !important;
+}
+
+/* Lock sidebar control buttons (notifications/profile/logout) appearance */
+nav.sidebar .sidebar-sticky .sidebar-controls .btn-icon,
+nav.sidebar .sidebar-sticky .sidebar-controls a.btn,
+.dashboard-theme nav.sidebar .sidebar-sticky .sidebar-controls .btn-icon,
+.dashboard-theme nav.sidebar .sidebar-sticky .sidebar-controls a.btn {
+    background-color: #344648 !important;
+    color: #ffffff !important;
+    border: none !important;
+}
+nav.sidebar .sidebar-sticky .sidebar-controls .btn-icon:hover,
+nav.sidebar .sidebar-sticky .sidebar-controls a.btn:hover,
+nav.sidebar .sidebar-sticky .sidebar-controls .btn-icon:focus,
+nav.sidebar .sidebar-sticky .sidebar-controls a.btn:focus,
+nav.sidebar .sidebar-sticky .sidebar-controls .btn-icon:active,
+nav.sidebar .sidebar-sticky .sidebar-controls a.btn:active,
+.dashboard-theme nav.sidebar .sidebar-sticky .sidebar-controls .btn-icon:hover,
+.dashboard-theme nav.sidebar .sidebar-sticky .sidebar-controls a.btn:hover,
+.dashboard-theme nav.sidebar .sidebar-sticky .sidebar-controls .btn-icon:focus,
+.dashboard-theme nav.sidebar .sidebar-sticky .sidebar-controls a.btn:focus,
+.dashboard-theme nav.sidebar .sidebar-sticky .sidebar-controls .btn-icon:active,
+.dashboard-theme nav.sidebar .sidebar-sticky .sidebar-controls a.btn:active {
+    background-color: #344648 !important;
+    color: #ffffff !important;
+    box-shadow: none !important;
+    background-image: none !important;
+}
+nav.sidebar .sidebar-sticky .sidebar-controls .btn-icon i,
+.dashboard-theme nav.sidebar .sidebar-sticky .sidebar-controls .btn-icon i {
+    color: #ffffff !important;
+}

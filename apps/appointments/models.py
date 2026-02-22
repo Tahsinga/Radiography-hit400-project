@@ -44,7 +44,7 @@ class Appointment(models.Model):
     patient = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='appointments')
     referring_doctor = models.ForeignKey(CustomUser, on_delete=models.SET_NULL, null=True, blank=True,
                                         related_name='referred_appointments', limit_choices_to={'role': 'doctor'})
-    scan_type = models.ForeignKey(ScanType, on_delete=models.PROTECT, related_name='appointments')
+    scan_type = models.ForeignKey(ScanType, on_delete=models.PROTECT, related_name='appointments', null=True, blank=True)
     
     appointment_date = models.DateField()
     appointment_time = models.TimeField()
@@ -52,9 +52,21 @@ class Appointment(models.Model):
     
     referral_document = models.FileField(upload_to='referrals/', blank=True, null=True)
     clinical_notes = models.TextField(blank=True)
+    appointment_description = models.CharField(max_length=255, blank=True, help_text="Brief description of appointment reason")
+    # Snapshot of patient contact/personal details at time of booking
+    first_name = models.CharField(max_length=100, blank=True)
+    last_name = models.CharField(max_length=100, blank=True)
+    contact_phone = models.CharField(max_length=15, blank=True)
+    contact_email = models.EmailField(blank=True)
+    date_of_birth = models.DateField(blank=True, null=True)
+    allergies = models.TextField(blank=True, help_text="Any allergies the patient reports")
+    other_conditions = models.TextField(blank=True, help_text="Other diseases or medical conditions")
     
     confirmed_by = models.ForeignKey(CustomUser, on_delete=models.SET_NULL, null=True, blank=True,
-                                     related_name='confirmed_appointments', limit_choices_to={'role': 'staff'})
+                                     related_name='confirmed_appointments')
+    receptionist = models.ForeignKey(CustomUser, on_delete=models.SET_NULL, null=True, blank=True,
+                                      related_name='handled_appointments', limit_choices_to={'role': 'receptionist'})
+    receptionist_note = models.TextField(blank=True)
     confirmation_date = models.DateTimeField(blank=True, null=True)
     
     reminder_sent = models.BooleanField(default=False)

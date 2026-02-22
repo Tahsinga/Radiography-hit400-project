@@ -2,8 +2,16 @@
 
 {% block title %}Notifications - MIC Radiology{% endblock %}
 
+{% block extra_css %}
+<style>
+    body {
+        background: #f0e0d4;
+    }
+</style>
+{% endblock %}
+
 {% block content %}
-<div class="card">
+<div class="card" style="margin-top: 50px;">
     <div class="card-header">
         <h5 class="mb-0">Notifications</h5>
     </div>
@@ -18,7 +26,7 @@
                         <p class="mb-1 text-muted">{{ notification.message|truncatewords:20 }}</p>
                         <small class="text-muted">
                             {{ notification.created_at|date:"M d, Y H:i" }} - 
-                            <span class="badge bg-{% if notification.status == 'delivered' %}success{% elif notification.status == 'sent' %}primary{% else %}warning{% endif %}">
+                            <span class="badge" style="background: #d0d0d0; color: #1a1a1a;">
                                 {{ notification.get_status_display }}
                             </span>
                         </small>

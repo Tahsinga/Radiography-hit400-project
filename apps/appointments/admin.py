@@ -10,10 +10,31 @@ class ScanTypeAdmin(admin.ModelAdmin):
 
 @admin.register(Appointment)
 class AppointmentAdmin(admin.ModelAdmin):
-    list_display = ('patient', 'scan_type', 'appointment_date', 'appointment_time', 'status')
-    list_filter = ('status', 'appointment_date', 'scan_type')
+    list_display = ('patient', 'first_name', 'last_name', 'contact_phone', 'scan_type', 'referring_doctor', 'appointment_date', 'appointment_time', 'status')
+    list_filter = ('status', 'appointment_date', 'scan_type', 'referring_doctor')
     search_fields = ('patient__first_name', 'patient__last_name', 'patient__email')
     readonly_fields = ('created_at', 'updated_at', 'confirmation_date', 'reminder_sent_at')
+    fieldsets = (
+        ('Patient Information', {
+            'fields': ('patient', 'first_name', 'last_name', 'contact_phone', 'contact_email', 'date_of_birth', 'allergies', 'other_conditions', 'referring_doctor')
+        }),
+        ('Appointment Details', {
+            'fields': ('scan_type', 'appointment_description', 'appointment_date', 'appointment_time', 'status')
+        }),
+        ('Medical Information', {
+            'fields': ('clinical_notes', 'referral_document')
+        }),
+        ('Receptionist Information', {
+            'fields': ('receptionist', 'receptionist_note', 'confirmed_by')
+        }),
+        ('Reminders', {
+            'fields': ('reminder_sent', 'reminder_sent_at')
+        }),
+        ('Timestamps', {
+            'fields': ('created_at', 'updated_at', 'confirmation_date'),
+            'classes': ('collapse',)
+        }),
+    )
 
 
 @admin.register(MedicalAidCoverage)

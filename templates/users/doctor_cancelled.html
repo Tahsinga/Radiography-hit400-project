@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block title %}Cancelled Referrals - MIC Radiology{% endblock %}
+
+{% block content %}
+<style>
+    .cancelled-wrapper { max-width:1200px; margin:16px auto; padding:0 12px; }
+    .cancelled-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:12px; }
+    .cancelled-header h2 { margin:0; font-size:1.4rem; }
+    .cancelled-list { display:flex; flex-direction:column; gap:12px; }
+    .cancelled-card { background:#fff; border-radius:8px; padding:12px 14px; box-shadow:0 8px 18px rgba(2,6,23,0.05); border-left:6px solid #e35d5b; display:flex; justify-content:space-between; align-items:center; }
+    .cancelled-info { display:flex; gap:18px; align-items:center; flex:1; }
+    .cancelled-info .name { font-weight:700; color:#0f172a; }
+    .cancelled-meta { color:#64748b; font-size:0.95rem; }
+    .cancelled-actions { min-width:140px; display:flex; gap:8px; align-items:center; }
+    .btn-ghost { background:transparent; border:1px solid #e6eef0; padding:8px 12px; border-radius:8px; }
+    @media (max-width:800px) { .cancelled-card { flex-direction:column; align-items:flex-start; } .cancelled-actions{ width:100%; justify-content:flex-start; margin-top:8px; } }
+</style>
+
+<div class="cancelled-wrapper" style="margin-top:30px;">
+    <div class="cancelled-header">
+        <h2>Cancelled Referrals</h2>
+        <div class="small-meta">Showing <strong>{{ cancelled_appointments.count }}</strong> cancelled</div>
+    </div>
+
+    {% if cancelled_appointments %}
+    <div class="cancelled-list">
+        {% for appt in cancelled_appointments %}
+        <div class="cancelled-card">
+                <div class="cancelled-info">
+                <div>
+                    <div class="name">{% if appt.first_name %}{{ appt.first_name }} {{ appt.last_name }}{% else %}{{ appt.patient.get_full_name }}{% endif %}</div>
+                    <div class="cancelled-meta">{{ appt.appointment_date }} • {% if appt.scan_type %}{{ appt.scan_type.name }}{% else %}N/A{% endif %}</div>
+                </div>
+                <div class="cancelled-meta">Contact: {% if appt.contact_phone %}{{ appt.contact_phone }}{% else %}{{ appt.patient.phone_number|default:'-' }}{% endif %} • {{ appt.contact_email|default:appt.patient.email|default:'-' }}</div>
+            </div>
+            <div class="cancelled-actions">
+                <a href="{% url 'appointment_detail' appt.id %}" class="btn-ghost">View</a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <p style="color:#64748b;">You have no cancelled referrals.</p>
+    {% endif %}
+</div>
+
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %}Confirm Complete - MIC Radiology{% endblock %}
+
+{% block content %}
+<div style="max-width:700px;margin:30px auto;padding:20px;">
+    <h3>Mark Appointment as Completed</h3>
+    <p>Are you sure you want to mark the appointment for <strong>{{ appointment.patient.get_full_name }}</strong> on <strong>{{ appointment.appointment_date }}</strong> as completed?</p>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-primary">Yes, mark completed</button>
+        <a href="{% url 'appointment_detail' appointment.id %}" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>
+{% endblock %}

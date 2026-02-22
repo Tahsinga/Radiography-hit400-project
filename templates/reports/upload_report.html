@@ -15,7 +15,7 @@
         <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
             {{ form.as_p }}
-            <button type="submit" class="btn btn-primary">Upload Report</button>
+            <button type="submit" class="btn" style="background: #f0f0f0; color: #1a1a1a; border: 1px solid #e0e0e0;">Upload Report</button>
             <a href="{% url 'appointment_list' %}" class="btn btn-secondary">Cancel</a>
         </form>
     </div>

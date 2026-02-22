@@ -6,6 +6,8 @@
     <title>{% block title %}MIC Radiology Management System{% endblock %}</title>
     {% load static %}
     
+    <!-- Google Sans Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Bootstrap Icons -->
@@ -18,7 +20,44 @@
     <style>
         /* Quick overrides if needed */
         body {
-            font-family: 'Segoe UI', 'Roboto', 'Helvetica Neue', sans-serif;
+            font-family: 'Google Sans', sans-serif;
+        }
+        /* Notification badge and animation */
+        .notif-wrapper { position: relative; display: inline-block; }
+        .notif-count {
+            position: absolute;
+            top: -6px;
+            right: -6px;
+            min-width: 20px;
+            height: 20px;
+            padding: 0 6px;
+            border-radius: 12px;
+            background: linear-gradient(135deg,#e35d5b 0%,#d32f2f 100%);
+            color: #fff;
+            font-size: 12px;
+            font-weight: 800;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 6px 18px rgba(211,47,47,0.18);
+            transform-origin: center;
+            transition: transform 0.25s ease;
+        }
+        .notif-count.pulse {
+            animation: notif-pulse 1.2s ease-in-out infinite;
+        }
+        @keyframes notif-pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.15); }
+            100% { transform: scale(1); }
+        }
+        .notif-bell.shake { animation: bell-shake 0.9s ease-in-out; }
+        @keyframes bell-shake {
+            0% { transform: rotate(0deg); }
+            25% { transform: rotate(-10deg); }
+            50% { transform: rotate(8deg); }
+            75% { transform: rotate(-6deg); }
+            100% { transform: rotate(0deg); }
         }
     </style>
     {% block extra_css %}{% endblock %}
@@ -47,7 +86,10 @@
                     <div class="sidebar-controls mt-3">
                         {% if user.is_authenticated %}
                             <a href="{% url 'notification_list' %}" class="btn btn-icon" title="Notifications">
-                                <i class="bi bi-bell"></i>
+                                <span class="notif-wrapper">
+                                    <i id="notif-bell" class="bi bi-bell"></i>
+                                    <span id="notif-count" class="notif-count" style="display:none;">0</span>
+                                </span>
                                 <span class="label">Notifications</span>
                             </a>
                             <a href="{% url 'profile' %}" class="btn btn-icon" title="Profile">
@@ -101,6 +143,24 @@
                                 </a>
                             </li>
                         </ul>
+                    {% elif user.is_receptionist %}
+                        <ul class="nav flex-column">
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'receptionist_dashboard' %}">
+                                    <i class="bi bi-house"></i> Dashboard
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'receptionist_queue' %}">
+                                    <i class="bi bi-calendar-check"></i> Appointments
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'add_scan' %}">
+                                    <i class="bi bi-plus-circle"></i> Add Scan
+                                </a>
+                            </li>
+                        </ul>
                     {% elif user.is_doctor %}
                         <ul class="nav flex-column">
                             <li class="nav-item">
@@ -109,8 +169,13 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{% url 'appointment_list' %}">
-                                    <i class="bi bi-calendar"></i> Referrals
+                                <a class="nav-link" href="{% url 'doctor_completed' %}">
+                                    <i class="bi bi-check2-circle"></i> Completed
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'doctor_cancelled' %}">
+                                    <i class="bi bi-x-circle"></i> Cancelled
                                 </a>
                             </li>
                         </ul>
@@ -151,6 +216,42 @@
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Poll unread notification count and animate bell when > 0
+        (function() {
+            const countEl = document.getElementById('notif-count');
+            const bellEl = document.getElementById('notif-bell');
+            if (!countEl) return;
+            const url = "{% url 'notification_unread_count' %}";
+
+            async function fetchCount() {
+                try {
+                    const res = await fetch(url, { credentials: 'same-origin' });
+                    if (!res.ok) return;
+                    const data = await res.json();
+                    const n = parseInt(data.unread_count || 0, 10);
+                    if (n > 0) {
+                        countEl.textContent = n > 99 ? '99+' : n;
+                        countEl.style.display = 'inline-flex';
+                        countEl.classList.add('pulse');
+                        if (bellEl) {
+                            bellEl.classList.add('shake');
+                            setTimeout(() => bellEl.classList.remove('shake'), 1200);
+                        }
+                    } else {
+                        countEl.style.display = 'none';
+                        countEl.classList.remove('pulse');
+                    }
+                } catch (e) {
+                    // ignore
+                }
+            }
+
+            // Initial fetch and periodic polling
+            fetchCount();
+            setInterval(fetchCount, 15000);
+        })();
+    </script>
     {% block extra_js %}{% endblock %}
 </body>
 </html>

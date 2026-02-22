@@ -10,6 +10,7 @@ class CustomUser(AbstractUser):
     USER_ROLES = [
         ('patient', 'Patient'),
         ('staff', 'Radiology Staff'),
+        ('receptionist', 'Receptionist'),
         ('doctor', 'Referral Doctor'),
     ]
     
@@ -49,6 +50,9 @@ class CustomUser(AbstractUser):
     
     def is_staff_user(self):
         return self.role == 'staff'
+
+    def is_receptionist(self):
+        return self.role == 'receptionist'
     
     def is_doctor(self):
         return self.role == 'doctor'

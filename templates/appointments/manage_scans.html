@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block title %}Manage Scans - MIC Radiology{% endblock %}
+
+{% block content %}
+<style>
+    .scans-wrapper { max-width:1000px; margin:24px auto; padding:0 12px; }
+    .scan-list { display:flex; flex-direction:column; gap:10px; }
+    .scan-card { background:#fff; padding:12px 14px; border-radius:8px; box-shadow:0 6px 18px rgba(2,6,23,0.04); display:flex; justify-content:space-between; align-items:center; }
+    .scan-meta { display:flex; flex-direction:column; gap:4px; }
+    .scan-name { font-weight:800; color:#0f172a; }
+    .scan-actions { display:flex; gap:8px; }
+    .btn-ghost { background:transparent; border:1px solid #e6eef0; padding:8px 10px; border-radius:8px; }
+    .btn-primary { background:linear-gradient(135deg,#16a085 0%,#117a65 100%); color:#fff; padding:8px 10px; border-radius:8px; border:none; }
+</style>
+
+<div class="scans-wrapper">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
+        <h2>Manage Scan Types</h2>
+        <a href="{% url 'add_scan' %}" class="btn-primary">Add Scan</a>
+    </div>
+
+    {% if scans %}
+    <div class="scan-list">
+        {% for s in scans %}
+        <div class="scan-card">
+            <div class="scan-meta">
+                <div class="scan-name">{{ s.name }} {% if not s.is_active %}<span style="color:#e35d5b;font-weight:700;">(inactive)</span>{% endif %}</div>
+                <div style="color:#64748b;">{{ s.description|truncatechars:120 }}</div>
+                <div style="color:#64748b;font-size:0.95rem;">Price: R{{ s.base_price }} • Duration: {{ s.estimated_duration_minutes }}m</div>
+            </div>
+            <div class="scan-actions">
+                <form method="post" action="{% url 'toggle_scan_active' s.id %}">{% csrf_token %}<button type="submit" class="btn-ghost">{% if s.is_active %}Deactivate{% else %}Activate{% endif %}</button></form>
+                <a href="{% url 'delete_scan' s.id %}" class="btn-ghost">Delete</a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <p>No scans defined yet.</p>
+    {% endif %}
+</div>
+
+{% endblock %}
